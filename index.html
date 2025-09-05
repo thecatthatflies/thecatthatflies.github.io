@@ -2,72 +2,346 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>theprojectplateau.space</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Project Plateau</title>
+  <meta name="description" content="A beautiful icon-first hub for Project Plateau projects." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL,wght,GRAD,opsz@0,400,0,48" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:FILL,wght,GRAD,opsz@0,400,0,48" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:FILL,wght,GRAD,opsz@0,400,0,48" rel="stylesheet" />
   <style>
-    * {
+    :root {
+      --bg: #0b0f1a;
+      --surface: rgba(255,255,255,0.08);
+      --text: #e8ecf5;
+      --muted: #b8c0d6;
+      --accent: #7aa2ff;
+      --accent-2: #7ef6da;
+      --card: rgba(255,255,255,0.1);
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --radius: 24px;
+      --blur: 14px;
+      --grid-min: 160px;
+      --icon-size: 40px;
+    }
+    /* Light theme tokens */
+    [data-theme="light"] {
+      --bg: #f7f9ff;
+      --surface: rgba(0,0,0,0.06);
+      --text: #0a1020;
+      --muted: #48506a;
+      --accent: #2559ff;
+      --accent-2: #00a790;
+      --card: rgba(255,255,255,0.6);
+      --shadow: 0 10px 25px rgba(18, 38, 80, 0.22);
+    }
+
+    /* Global reset */
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      font-family: "Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      overflow-x: hidden;
     }
-    html, body {
-      background-color: #0f0f0f;
-      color: #ffffff;
-      font-family: "Inter", sans-serif;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
+
+    /* Animated gradient / blob background */
+    .bg {
+      position: fixed; inset: 0; pointer-events: none; z-index: -2;
+      background: radial-gradient(1200px 800px at 10% 20%, rgba(122,162,255,0.18), transparent 60%),
+                  radial-gradient(900px 700px at 90% 10%, rgba(126,246,218,0.16), transparent 55%),
+                  radial-gradient(1000px 900px at 50% 100%, rgba(255,160,200,0.12), transparent 50%);
+      filter: saturate(1.2);
     }
-    .container {
-      max-width: 700px;
-      padding: 2rem;
+    .orbs { position: fixed; inset: 0; z-index: -1; filter: blur(60px) saturate(1.1); opacity: 0.7; }
+    .orb { position: absolute; width: 38vmax; height: 38vmax; border-radius: 50%; mix-blend-mode: screen; }
+    .orb.a { background: radial-gradient(circle at 30% 30%, #7aa2ff, transparent 60%); left: -10vmax; top: -8vmax; animation: float 18s ease-in-out infinite; }
+    .orb.b { background: radial-gradient(circle at 70% 40%, #7ef6da, transparent 60%); right: -12vmax; top: 10vmax; animation: float 22s ease-in-out -6s infinite; }
+    .orb.c { background: radial-gradient(circle at 50% 60%, #ffd1f0, transparent 60%); left: 15vmax; bottom: -18vmax; animation: float 26s ease-in-out -3s infinite; }
+    @keyframes float { 0%,100%{ transform: translateY(0) translateX(0);} 50%{ transform: translateY(-30px) translateX(20px);} }
+
+    /* Header */
+    header {
+      width: min(1100px, 92%);
+      margin: 48px auto 14px;
+      display: flex; align-items: center; gap: 14px; justify-content: space-between;
     }
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      background: linear-gradient(90deg, #ff8a00, #e52e71);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+    .brand { display: flex; align-items: center; gap: 14px; }
+    .logo {
+      width: 46px; height: 46px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid; place-items: center; color: white; box-shadow: var(--shadow);
     }
-    p {
-      font-size: 1.1rem;
-      color: #cccccc;
-      margin-bottom: 2rem;
-      line-height: 1.6;
+    .logo .material-symbols {
+      font-size: 30px;
     }
-    a.button {
-      text-decoration: none;
-      color: #0f0f0f;
-      background: #ffffff;
-      padding: 0.75rem 1.5rem;
-      font-weight: 500;
-      border-radius: 6px;
-      transition: background 0.3s ease;
+    .title { line-height: 1.1; }
+    h1 { margin: 0; font-size: clamp(1.4rem, 1.2rem + 1.2vw, 2.2rem); font-weight: 800; letter-spacing: 0.2px; }
+    .subtitle { margin: 2px 0 0; color: var(--muted); font-weight: 600; font-size: 0.95rem; }
+
+    /* Controls */
+    .controls { display: flex; gap: 10px; align-items: center; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px;
+      background: var(--surface); backdrop-filter: blur(var(--blur)); border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: var(--shadow);
     }
-    a.button:hover {
-      background: #e0e0e0;
+    .search { width: clamp(180px, 26vw, 320px); }
+    .search input {
+      width: 100%; border: none; outline: none; background: transparent; color: var(--text); font-size: 0.95rem; font-weight: 600;
     }
-    footer {
-      margin-top: 3rem;
-      font-size: 0.85rem;
-      color: #666666;
+    .btn { cursor: pointer; user-select: none; }
+    .material-symbols { font-family: var(--icon-family, "Material Symbols Outlined"); font-weight: normal; font-style: normal; line-height: 1; letter-spacing: normal; text-transform: none; display: inline-block; white-space: nowrap; word-wrap: normal; direction: ltr; }
+
+    /* Grid */
+    main { width: min(1100px, 92%); margin: 10px auto 80px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(var(--grid-min), 1fr)); gap: 22px; }
+
+    .card {
+      position: relative; overflow: hidden; border-radius: var(--radius); padding: 18px; isolation: isolate; text-decoration: none; color: var(--text);
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+      background: var(--card);
+      backdrop-filter: blur(var(--blur));
+      border: 1px solid rgba(255,255,255,0.16);
+      box-shadow: var(--shadow);
+      transform: translateY(0) scale(1); transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+    }
+    .card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 20px 45px rgba(0,0,0,0.35); border-color: rgba(255,255,255,0.28); }
+
+    .card .icon-wrap { display: grid; place-items: center; width: 64px; height: 64px; border-radius: 18px; margin-bottom: 14px; background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.16); }
+    .card .material-symbols { font-size: var(--icon-size); transition: font-variation-settings .25s ease, transform .25s ease; }
+    .card:hover .material-symbols { transform: scale(1.08); }
+
+    .card h3 { margin: 0 0 6px; font-size: 1.05rem; letter-spacing: .2px; }
+    .card p { margin: 0; color: var(--muted); font-size: .9rem; }
+
+    .badge { position: absolute; top: 10px; right: 10px; font-size: .75rem; padding: 6px 10px; border-radius: 999px; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.18); backdrop-filter: blur(8px); }
+
+    /* Hover tilt */
+    .tilt { transform-style: preserve-3d; perspective: 800px; }
+    .tilt:hover .tilt-inner { transform: translateZ(8px); }
+
+    /* Footer */
+    footer { width: min(1100px, 92%); margin: 30px auto 38px; color: var(--muted); display:flex; align-items:center; justify-content:space-between; gap:12px; }
+
+    /* Quick settings floating dock */
+    .dock { position: fixed; right: 20px; bottom: 20px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .chip { background: var(--surface); border: 1px solid rgba(255,255,255,0.16); border-radius: 12px; padding: 10px 12px; backdrop-filter: blur(10px); box-shadow: var(--shadow); display: inline-flex; align-items: center; gap: 8px; cursor: pointer; user-select: none; }
+    .chip select, .chip input[type="range"] { background: transparent; border: none; color: var(--text); font-weight: 600; }
+    .chip option { color: initial; background: initial; }
+
+    /* Entrances */
+    .reveal { opacity: 0; transform: translateY(10px) scale(0.98); }
+    .reveal.in { opacity: 1; transform: translateY(0) scale(1); transition: opacity .45s ease, transform .45s cubic-bezier(.2,.8,.2,1); }
+
+    /* Responsive tweaks */
+    @media (max-width: 540px){
+      .controls { flex-wrap: wrap; }
+      .search { width: 100%; }
+      .badge { display:none; }
     }
   </style>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237aa2ff'/%3E%3Cstop offset='1' stop-color='%237ef6da'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect rx='14' ry='14' x='4' y='4' width='56' height='56' fill='url(%23g)'/%3E%3Cpath d='M18 40 L32 16 L46 40 Z' fill='white' opacity='.9'/%3E%3C/svg%3E" />
 </head>
 <body>
-  <div class="container">
-    <h1>theprojectplateau.space</h1>
-    <p>a digital summit for ideas, tools, and creative experiments.</p>
-    <a href="#!" class="button">Explore Projects Soon</a>
-    <footer>
-      <p>&copy; 2025 theprojectplateau. Built with passion.</p>
-    </footer>
+  <div class="bg"></div>
+  <div class="orbs">
+    <div class="orb a"></div>
+    <div class="orb b"></div>
+    <div class="orb c"></div>
   </div>
+
+  <header class="reveal">
+    <div class="brand">
+      <div class="logo"><span class="material-symbols">terrain</span></div>
+      <div class="title">
+        <h1>Project Plateau</h1>
+        <p class="subtitle">A beautiful, icon‑first hub for all your projects</p>
+      </div>
+    </div>
+    <div class="controls">
+      <div class="pill search">
+        <span class="material-symbols" aria-hidden="true">search</span>
+        <input id="search" type="text" placeholder="Search projects…" autocomplete="off" />
+      </div>
+      <div class="pill btn" id="themeToggle" title="Theme">
+        <span class="material-symbols" aria-hidden="true">dark_mode</span>
+        <strong id="themeLabel">Auto</strong>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="grid" id="grid">
+      <!-- Tsunami -->
+      <a class="card tilt reveal" href="https://tsunami.theprojectplateau.space/" data-name="Tsunami" data-tags="science hazard ocean wave geology">
+        <span class="badge">Live</span>
+        <div class="tilt-inner">
+          <div class="icon-wrap" aria-hidden="true"><span class="material-symbols">water</span></div>
+          <h3>Tsunami</h3>
+          <p>FEMA‑style warning page & research.</p>
+        </div>
+      </a>
+
+      <!-- Homelessness -->
+      <a class="card tilt reveal" href="https://homelessness.theprojectplateau.space/" data-name="Homelessness" data-tags="civics social policy research service">
+        <span class="badge">Live</span>
+        <div class="tilt-inner">
+          <div class="icon-wrap" aria-hidden="true"><span class="material-symbols">home</span></div>
+          <h3>Homelessness</h3>
+          <p>Awareness site with stats & resources.</p>
+        </div>
+      </a>
+
+      <!-- Chad -->
+      <a class="card tilt reveal" href="https://chad.theprojectplateau.space/" data-name="Chad" data-tags="geography africa research country">
+        <span class="badge">Live</span>
+        <div class="tilt-inner">
+          <div class="icon-wrap" aria-hidden="true"><span class="material-symbols">public</span></div>
+          <h3>Chad</h3>
+          <p>Sub‑Saharan country deep‑dive.</p>
+        </div>
+      </a>
+
+      <!-- Taiwan -->
+      <a class="card tilt reveal" href="https://taiwan.theprojectplateau.space/" data-name="Taiwan" data-tags="asia history research timeline">
+        <span class="badge">Live</span>
+        <div class="tilt-inner">
+          <div class="icon-wrap" aria-hidden="true"><span class="material-symbols">flag</span></div>
+          <h3>Taiwan</h3>
+          <p>Historian page with events carousel.</p>
+        </div>
+      </a>
+
+      <!-- Code Online -->
+      <a class="card tilt reveal" href="https://codeonline.theprojectplateau.space/" data-name="Code Online" data-tags="code dev programming tools">
+        <span class="badge">Tools</span>
+        <div class="tilt-inner">
+          <div class="icon-wrap" aria-hidden="true"><span class="material-symbols">code</span></div>
+          <h3>Code Online</h3>
+          <p>Snippets, sandboxes, and utilities.</p>
+        </div>
+      </a>
+
+      <!-- Placeholder for future projects -->
+      <a class="card tilt reveal" href="#" data-name="More Soon" data-tags="coming soon placeholder" aria-label="More projects coming soon" onclick="return false;">
+        <div class="tilt-inner">
+          <div class="icon-wrap" aria-hidden="true"><span class="material-symbols">add</span></div>
+          <h3>More soon</h3>
+          <p>New projects will appear here.</p>
+        </div>
+      </a>
+    </section>
+  </main>
+
+  <footer class="reveal">
+    <span>Made with <span class="material-symbols" aria-hidden="true">favorite</span> & Google Fonts Icons</span>
+    <span id="count"></span>
+  </footer>
+
+  <!-- Quick settings dock -->
+  <div class="dock reveal" aria-label="Quick settings">
+    <div class="chip">
+      <span class="material-symbols" aria-hidden="true">ink_eraser</span>
+      <label for="styleSel" style="font-weight:700">Style</label>
+      <select id="styleSel" aria-label="Icon style">
+        <option value="Outlined">Outlined</option>
+        <option value="Rounded">Rounded</option>
+        <option value="Sharp">Sharp</option>
+      </select>
+    </div>
+    <div class="chip">
+      <span class="material-symbols" aria-hidden="true">format_size</span>
+      <label for="sizeRange" style="font-weight:700">Size</label>
+      <input id="sizeRange" type="range" min="28" max="72" value="40" />
+    </div>
+    <div class="chip" id="fillToggle" role="button" tabindex="0" aria-pressed="false">
+      <span class="material-symbols" aria-hidden="true">ink_pen</span>
+      <strong>Fill: Off</strong>
+    </div>
+  </div>
+
+  <script>
+    // =============== Utilities ===============
+    const $ = (s, r = document) => r.querySelector(s);
+    const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+    // =============== Theme Toggle (Auto / Light / Dark) ===============
+    const themeToggle = $('#themeToggle');
+    const themeLabel = $('#themeLabel');
+
+    const getSystemTheme = () => matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+    const applyTheme = (mode) => {
+      if (mode === 'auto') {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('pp-theme', 'auto');
+        themeLabel.textContent = 'Auto';
+        themeToggle.firstElementChild.textContent = getSystemTheme() === 'dark' ? 'dark_mode' : 'light_mode';
+      } else {
+        document.documentElement.setAttribute('data-theme', mode);
+        localStorage.setItem('pp-theme', mode);
+        themeLabel.textContent = mode === 'dark' ? 'Dark' : 'Light';
+        themeToggle.firstElementChild.textContent = mode === 'dark' ? 'dark_mode' : 'light_mode';
+      }
+    };
+
+    let themeState = localStorage.getItem('pp-theme') || 'auto';
+    applyTheme(themeState);
+
+    themeToggle.addEventListener('click', () => {
+      themeState = themeState === 'auto' ? 'dark' : themeState === 'dark' ? 'light' : 'auto';
+      applyTheme(themeState);
+    });
+
+    // =============== Search Filter ===============
+    const search = $('#search');
+    const cards = $$('.card');
+    const count = $('#count');
+
+    const updateCount = () => {
+      const visible = cards.filter(c => !c.classList.contains('hidden')).length;
+      count.textContent = `${visible} project${visible===1?'':'s'}`;
+    };
+
+    const applySearch = () => {
+      const q = search.value.trim().toLowerCase();
+      cards.forEach(card => {
+        const n = card.dataset.name.toLowerCase();
+        const t = card.dataset.tags.toLowerCase();
+        const match = !q || n.includes(q) || t.includes(q);
+        card.style.pointerEvents = match ? '' : 'none';
+        card.style.opacity = match ? '' : '0.15';
+        card.classList.toggle('hidden', !match);
+      });
+      updateCount();
+    };
+
+    search.addEventListener('input', applySearch);
+    updateCount();
+
+    // =============== Reveal on View ===============
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.08 });
+    $$('.reveal').forEach(el => io.observe(el));
+
+    // =============== Tilt Hover (lightweight) ===============
+    $$('.card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `rotateX(${(-y*4).toFixed(2)}deg) rotateY(${(x*6).toFixed(2)}deg) translateY(-4px) scale(1.02)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+  </script>
 </body>
 </html>
