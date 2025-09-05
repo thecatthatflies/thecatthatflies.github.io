@@ -11,10 +11,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"/>
   <style>
     :root{--bg:#0b0f1a;--surface:rgba(255,255,255,0.08);--text:#e8ecf5;--muted:#b8c0d6;--accent:#7aa2ff;--accent-2:#7ef6da;--card:rgba(255,255,255,0.1);--shadow:0 10px 30px rgba(0,0,0,0.35);--radius:24px;--blur:14px;--grid-min:260px;--icon-size:56px}
-    [data-theme="light"]{--bg:#f7f9ff;--surface:rgba(0,0,0,0.06);--text:#0a1020;--muted:#48506a;--accent:#2559ff;--accent-2:#00a790;--card:rgba(255,255,255,0.6);--shadow:0 10px 25px rgba(18,38,80,0.22)}
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:"Plus Jakarta Sans",system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,sans-serif;color:var(--text);background:var(--bg);overflow-x:hidden}
     .bg{position:fixed;inset:0;pointer-events:none;z-index:-2;background:radial-gradient(1200px 800px at 10% 20%,rgba(122,162,255,0.18),transparent 60%),radial-gradient(900px 700px at 90% 10%,rgba(126,246,218,0.16),transparent 55%),radial-gradient(1000px 900px at 50% 100%,rgba(255,160,200,0.12),transparent 50%);filter:saturate(1.2)}
     .orbs{position:fixed;inset:0;z-index:-1;filter:blur(60px) saturate(1.1);opacity:.7}
     .orb{position:absolute;width:38vmax;height:38vmax;border-radius:50%;mix-blend-mode:screen}
@@ -22,108 +20,104 @@
     .orb.b{background:radial-gradient(circle at 70% 40%,#7ef6da,transparent 60%);right:-12vmax;top:10vmax;animation:float 22s ease-in-out -6s infinite}
     .orb.c{background:radial-gradient(circle at 50% 60%,#ffd1f0,transparent 60%);left:15vmax;bottom:-18vmax;animation:float 26s ease-in-out -3s infinite}
     @keyframes float{0%,100%{transform:translateY(0) translateX(0)}50%{transform:translateY(-30px) translateX(20px)}}
-    header{position:sticky;top:0;z-index:5;width:min(1200px,94%);margin:0 auto;padding:18px 0;display:flex;align-items:center;gap:14px;justify-content:space-between;background:linear-gradient(180deg,rgba(11,15,26,.85),rgba(11,15,26,.6) 60%,rgba(11,15,26,0));backdrop-filter:blur(10px)}
+    header{position:fixed;top:0;left:0;width:100%;padding:18px 24px;z-index:6;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(11,15,26,.75),rgba(11,15,26,.35) 60%,rgba(11,15,26,0));transform:translateY(-100%);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+    header.visible{transform:translateY(0)}
+    .head-inner{width:min(1200px,94%);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px}
     .brand{display:flex;align-items:center;gap:14px}
     .logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:#fff;box-shadow:var(--shadow)}
     .logo .material-symbols{font-size:30px}
-    .title{line-height:1.1}
-    h1{margin:0;font-size:clamp(1.4rem,1.2rem + 1.2vw,2.2rem);font-weight:800;letter-spacing:.2px}
-    .subtitle{margin:2px 0 0;color:var(--muted);font-weight:600;font-size:.95rem}
+    .title h1{margin:0;font-size:1.6rem;font-weight:800}
+    .subtitle{margin:0;color:var(--muted);font-weight:600;font-size:.9rem}
     .controls{display:flex;gap:10px;align-items:center}
     .pill{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;background:var(--surface);backdrop-filter:blur(var(--blur));border:1px solid rgba(255,255,255,0.12);box-shadow:var(--shadow)}
     .search{width:clamp(200px,30vw,360px)}
     .search input{width:100%;border:none;outline:none;background:transparent;color:var(--text);font-size:1rem;font-weight:600}
-    .btn{cursor:pointer;user-select:none}
-    .material-symbols{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;word-wrap:normal;direction:ltr;-webkit-font-smoothing:antialiased;font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 48}
-    .dock-title{position:relative;width:min(1200px,94%);margin:0 auto;height:100vh}
-    #heroTitle{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(1);display:flex;align-items:center;gap:16px;will-change:transform;z-index:4}
-    #heroTitle .logo{width:60px;height:60px;border-radius:18px}
-    #heroTitle h1{font-size:clamp(2.4rem,2.2rem + 3vw,4.2rem)}
-    #heroTitle .subtitle{font-size:1.05rem}
-    #titleDock{position:absolute;top:18px;left:0;height:1px;width:1px}
+    .material-symbols{font-family:'Material Symbols Outlined'}
+    #fly{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(1);z-index:7;display:flex;align-items:center;gap:16px;pointer-events:none;will-change:transform,opacity}
+    #fly .logo{width:60px;height:60px;border-radius:18px}
+    #fly h1{font-size:clamp(2.4rem,2.2rem + 3vw,4.2rem);font-weight:800;margin:0}
+    #fly p{margin:0;color:var(--muted);font-weight:600}
+    .spacer{height:100vh}
     main{width:min(1200px,94%);margin:0 auto 100px}
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(var(--grid-min),1fr));gap:28px}
-    .card{position:relative;overflow:hidden;border-radius:var(--radius);padding:28px;isolation:isolate;text-decoration:none;color:var(--text);background:var(--card);backdrop-filter:blur(var(--blur));border:1px solid rgba(255,255,255,0.16);box-shadow:var(--shadow);transform:translateY(0) scale(1);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease,background .25s ease;min-height:240px}
+    .card{position:relative;overflow:hidden;border-radius:var(--radius);padding:28px;text-decoration:none;color:var(--text);background:var(--card);backdrop-filter:blur(var(--blur));border:1px solid rgba(255,255,255,0.16);box-shadow:var(--shadow);min-height:240px;transition:transform .25s ease,box-shadow .25s ease}
     .card:hover{transform:translateY(-8px) scale(1.03);box-shadow:0 24px 55px rgba(0,0,0,0.4);border-color:rgba(255,255,255,0.32)}
     .card .icon-wrap{display:grid;place-items:center;width:80px;height:80px;border-radius:20px;margin-bottom:18px;background:rgba(255,255,255,0.09);border:1px solid rgba(255,255,255,0.16)}
-    .card .material-symbols{font-size:var(--icon-size);transition:font-variation-settings .25s ease,transform .25s ease}
-    .card:hover .material-symbols{transform:scale(1.15)}
-    .card h3{margin:0 0 8px;font-size:1.25rem;font-weight:700;letter-spacing:.2px}
+    .card .material-symbols{font-size:var(--icon-size)}
+    .card h3{margin:0 0 8px;font-size:1.25rem;font-weight:700}
     .card p{margin:0;color:var(--muted);font-size:1rem;line-height:1.4}
     .badge{position:absolute;top:14px;right:14px;font-size:.85rem;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,0.16);border:1px solid rgba(255,255,255,0.18);backdrop-filter:blur(8px)}
     footer{width:min(1200px,94%);margin:40px auto 50px;color:var(--muted);display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:1rem}
-    .reveal{opacity:0;transform:translateY(10px) scale(0.98)}
-    .reveal.in{opacity:1;transform:translateY(0) scale(1);transition:opacity .45s ease,transform .45s cubic-bezier(.2,.8,.2,1)}
-    @media (max-width:540px){#heroTitle .logo{width:52px;height:52px}#heroTitle h1{font-size:2.2rem}.controls{flex-wrap:wrap}.search{width:100%}.badge{display:none}.card{padding:20px;min-height:200px}.card h3{font-size:1.1rem}.card p{font-size:.95rem}}
   </style>
 </head>
 <body>
   <div class="bg"></div>
   <div class="orbs"><div class="orb a"></div><div class="orb b"></div><div class="orb c"></div></div>
 
-  <div class="dock-title">
-    <div id="titleDock"></div>
-  </div>
-
-  <div id="heroTitle">
+  <div id="fly">
     <div class="logo"><span class="material-symbols">terrain</span></div>
-    <div class="title">
-      <h1>The Project Plateau</h1>
-      <p class="subtitle">The hub for all websites that are hosted on this domain.</p>
-    </div>
+    <div class="title"><h1>The Project Plateau</h1><p class="subtitle">The hub for all websites that are hosted on this domain.</p></div>
   </div>
 
-  <header>
-    <div class="brand">
-      <div class="logo"><span class="material-symbols">terrain</span></div>
-      <div class="title"><h1>The Project Plateau</h1><p class="subtitle">The hub for all websites that are hosted on this domain.</p></div>
-    </div>
-    <div class="controls">
-      <div class="pill search"><span class="material-symbols" aria-hidden="true">search</span><input id="search" type="text" placeholder="Search projects…" autocomplete="off"/></div>
-      <div class="pill btn" id="themeToggle" title="Theme"><span class="material-symbols" aria-hidden="true">dark_mode</span><strong id="themeLabel">Auto</strong></div>
+  <header id="header">
+    <div class="head-inner">
+      <div class="brand" id="brandDock">
+        <div class="logo"><span class="material-symbols">terrain</span></div>
+        <div class="title"><h1>The Project Plateau</h1><p class="subtitle">The hub for all websites that are hosted on this domain.</p></div>
+      </div>
+      <div class="controls">
+        <div class="pill search"><span class="material-symbols">search</span><input id="search" type="text" placeholder="Search projects…" autocomplete="off"/></div>
+        <div class="pill"><span class="material-symbols">dark_mode</span><strong id="themeLabel">Auto</strong></div>
+      </div>
     </div>
   </header>
 
+  <div class="spacer"></div>
+
   <main>
-    <section class="grid" id="grid">
-      <a class="card reveal" href="https://tsunami.theprojectplateau.space/" data-name="Tsunami" data-tags="science hazard ocean wave geology"><span class="badge">Live</span><div class="icon-wrap" aria-hidden="true"><span class="material-symbols">water</span></div><h3>Tsunami (f/ Science Class)</h3><p>A FEMA styled page that educates people on the hazards of tsunamis, and how to mitigate them.</p></a>
-      <a class="card reveal" href="https://homelessness.theprojectplateau.space/" data-name="Homelessness" data-tags="civics social policy research service"><span class="badge">Live</span><div class="icon-wrap" aria-hidden="true"><span class="material-symbols">home</span></div><h3>Homelessness (f/ Research Class)</h3><p>A website to raise awareness about homelessness with statistics and survey data from college professors.</p></a>
-      <a class="card reveal" href="https://chad.theprojectplateau.space/" data-name="Chad" data-tags="geography africa research country"><span class="badge">Live</span><div class="icon-wrap" aria-hidden="true"><span class="material-symbols">public</span></div><h3>Chad (f/ Geography Class)</h3><p>A deep dive into the history, traditions and beauty of Chad.</p></a>
-      <a class="card reveal" href="https://taiwan.theprojectplateau.space/" data-name="Taiwan" data-tags="asia history research timeline"><span class="badge">Live</span><div class="icon-wrap" aria-hidden="true"><span class="material-symbols">flag</span></div><h3>Taiwan (also Geography)</h3><p>A website that details Taiwan from its lowest valleys to it's most beautiful hills.</p></a>
-      <a class="card reveal" href="https://codeonline.theprojectplateau.space/" data-name="Code Online" data-tags="code dev programming tools"><span class="badge">Tools</span><div class="icon-wrap" aria-hidden="true"><span class="material-symbols">code</span></div><h3>CodeOnline</h3><p>A local coding IDE that supprots HTML, CSS and JS with exports.</p></a>
-      <a class="card reveal" href="#" data-name="More Soon" data-tags="coming soon placeholder" aria-label="More projects coming soon" onclick="return false;"><div class="icon-wrap" aria-hidden="true"><span class="material-symbols">add</span></div><h3>More soon</h3><p>New projects will appear here.</p></a>
+    <section class="grid">
+      <a class="card" href="https://tsunami.theprojectplateau.space/"><span class="badge">Live</span><div class="icon-wrap"><span class="material-symbols">water</span></div><h3>Tsunami</h3><p>A FEMA styled page that educates people on the hazards of tsunamis, and how to mitigate them.</p></a>
+      <a class="card" href="https://homelessness.theprojectplateau.space/"><span class="badge">Live</span><div class="icon-wrap"><span class="material-symbols">home</span></div><h3>Homelessness</h3><p>A website to raise awareness about homelessness with statistics and survey data from college professors.</p></a>
+      <a class="card" href="https://chad.theprojectplateau.space/"><span class="badge">Live</span><div class="icon-wrap"><span class="material-symbols">public</span></div><h3>Chad</h3><p>A deep dive into the history, traditions and beauty of Chad.</p></a>
+      <a class="card" href="https://taiwan.theprojectplateau.space/"><span class="badge">Live</span><div class="icon-wrap"><span class="material-symbols">flag</span></div><h3>Taiwan</h3><p>A website that details Taiwan from its lowest valleys to it's most beautiful hills.</p></a>
+      <a class="card" href="https://codeonline.theprojectplateau.space/"><span class="badge">Tools</span><div class="icon-wrap"><span class="material-symbols">code</span></div><h3>CodeOnline</h3><p>A local coding IDE that supprots HTML, CSS and JS with exports.</p></a>
+      <a class="card" href="#"><div class="icon-wrap"><span class="material-symbols">add</span></div><h3>More soon</h3><p>New projects will appear here.</p></a>
     </section>
   </main>
 
-  <footer><span>Made with <span class="material-symbols" aria-hidden="true">favorite</span> & Google Fonts Icons</span><span id="count"></span></footer>
+  <footer><span>Made with <span class="material-symbols">favorite</span> & Google Fonts Icons</span><span id="count"></span></footer>
 
   <script>
-    const $=(s,r=document)=>r.querySelector(s);const $$=(s,r=document)=>Array.from(r.querySelectorAll(s));
-    const themeToggle=$('#themeToggle');const themeLabel=$('#themeLabel');
-    const getSystemTheme=()=>matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
-    const applyTheme=(m)=>{if(m==='auto'){document.documentElement.removeAttribute('data-theme');localStorage.setItem('pp-theme','auto');themeLabel.textContent='Auto';themeToggle.firstElementChild.textContent=getSystemTheme()==='dark'?'dark_mode':'light_mode'}else{document.documentElement.setAttribute('data-theme',m);localStorage.setItem('pp-theme',m);themeLabel.textContent=m==='dark'?'Dark':'Light';themeToggle.firstElementChild.textContent=m==='dark'?'dark_mode':'light_mode'}};
-    let themeState=localStorage.getItem('pp-theme')||'auto';applyTheme(themeState);
-    themeToggle.addEventListener('click',()=>{themeState=themeState==='auto'?'dark':themeState==='dark'?'light':'auto';applyTheme(themeState)});
-
-    const search=$('#search');const cards=$$('.card');const count=$('#count');
-    const updateCount=()=>{const v=cards.filter(c=>!c.classList.contains('hidden')).length;count.textContent=`${v} project${v===1?'':'s'}`};
-    const applySearch=()=>{const q=search.value.trim().toLowerCase();cards.forEach(card=>{const n=card.dataset.name.toLowerCase();const t=card.dataset.tags.toLowerCase();const match=!q||n.includes(q)||t.includes(q);card.style.pointerEvents=match?'':'none';card.style.opacity=match?'':'0.15';card.classList.toggle('hidden',!match)});updateCount()};
-    search.addEventListener('input',applySearch);updateCount();
-
-    const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.08});
-    $$('.reveal').forEach(el=>io.observe(el));
-
-    const titleEl=$('#heroTitle');
-    const dock=$('#titleDock');
-    let startY=0;let endY=0;let startRect;let endRect;let maxScroll=0;let raf=null;
+    const fly=document.getElementById('fly');
+    const header=document.getElementById('header');
+    const dock=document.getElementById('brandDock');
+    let anim=null;
+    const clamp=(n,min,max)=>Math.min(Math.max(n,min),max);
     const lerp=(a,b,t)=>a+(b-a)*t;
-    const syncRects=()=>{startRect=titleEl.getBoundingClientRect();const dRect=dock.getBoundingClientRect();endRect={x:dRect.left,y:dRect.top};const h=window.innerHeight;startY=window.scrollY;endY=window.scrollY+h*0.6;maxScroll=endY-startY};
-    const applyTransform=()=>{const s=window.scrollY;let t=Math.min(Math.max((s-startY)/maxScroll,0),1);const curRect=titleEl.getBoundingClientRect();const tx=lerp(window.innerWidth/2 - curRect.width/2,endRect.x, t);const ty=lerp(window.innerHeight/2 - curRect.height/2,endRect.y, t);const scale=lerp(1,0.55,t);titleEl.style.transform=`translate(${tx}px, ${ty}px) scale(${scale})`;titleEl.style.left='0';titleEl.style.top='0';};
-    const onScroll=()=>{if(raf) return;raf=requestAnimationFrame(()=>{applyTransform();raf=null});};
-    const onResize=()=>{titleEl.style.transform='translate(-50%,-50%) scale(1)';titleEl.style.left='50%';titleEl.style.top='50%';syncRects();applyTransform();};
-    window.addEventListener('scroll',onScroll,{passive:true});
-    window.addEventListener('resize',onResize);
-    window.addEventListener('load',()=>{syncRects();applyTransform();});
+    const compute=()=>{
+      const fr=fly.getBoundingClientRect();
+      const dr=dock.getBoundingClientRect();
+      const cx=window.innerWidth/2-fr.width/2;
+      const cy=window.innerHeight/2-fr.height/2;
+      return{cx,cy,tx:dr.left,ty:dr.top,fs:1,ts:0.58};
+    };
+    let geom=compute();
+    const update=()=>{geom=compute();apply()};
+    const apply=()=>{
+      const s=window.scrollY;
+      const start=0;
+      const end=window.innerHeight*0.5;
+      const t=clamp((s-start)/(end-start),0,1);
+      const x=lerp(geom.cx,geom.tx,t);
+      const y=lerp(geom.cy,geom.ty,t);
+      const sc=lerp(geom.fs,geom.ts,t);
+      fly.style.transform=`translate(${x}px,${y}px) scale(${sc})`;
+      fly.style.opacity=String(1-t*1.1);
+      header.classList.toggle('visible',t>=0.98);
+    };
+    window.addEventListener('scroll',()=>{if(anim)return;anim=requestAnimationFrame(()=>{apply();anim=null})},{passive:true});
+    window.addEventListener('resize',()=>{update()});
+    window.addEventListener('load',()=>{update();apply()});
   </script>
 </body>
 </html>
