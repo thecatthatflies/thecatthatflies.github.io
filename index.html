@@ -20,8 +20,7 @@
     .orb.b{background:radial-gradient(circle at 70% 40%,#7ef6da,transparent 60%);right:-12vmax;top:10vmax;animation:float 22s ease-in-out -6s infinite}
     .orb.c{background:radial-gradient(circle at 50% 60%,#ffd1f0,transparent 60%);left:15vmax;bottom:-18vmax;animation:float 26s ease-in-out -3s infinite}
     @keyframes float{0%,100%{transform:translateY(0) translateX(0)}50%{transform:translateY(-30px) translateX(20px)}}
-    header{position:fixed;top:0;left:0;width:100%;padding:18px 24px;z-index:6;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(11,15,26,.75),rgba(11,15,26,.35) 60%,rgba(11,15,26,0));transform:translateY(-100%);transition:transform .5s cubic-bezier(.2,.8,.2,1)}
-    header.visible{transform:translateY(0)}
+    header{position:fixed;top:0;left:0;width:100%;padding:18px 24px;z-index:6;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(11,15,26,.75),rgba(11,15,26,.35) 60%,rgba(11,15,26,0));visibility:hidden;opacity:0;pointer-events:none;transform:translateY(-18px);transition:opacity .45s cubic-bezier(.2,.8,.2,1), transform .45s cubic-bezier(.2,.8,.2,1)} header.visible{visibility:visible;opacity:1;pointer-events:auto;transform:translateY(0)}
     .head-inner{width:min(1200px,94%);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:14px}
     .brand{display:flex;align-items:center;gap:14px}
     .logo{width:46px;height:46px;border-radius:14px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:grid;place-items:center;color:#fff;box-shadow:var(--shadow)}
@@ -33,7 +32,7 @@
     .search{width:clamp(200px,30vw,360px)}
     .search input{width:100%;border:none;outline:none;background:transparent;color:var(--text);font-size:1rem;font-weight:600}
     .material-symbols{font-family:'Material Symbols Outlined'}
-    #fly{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(1);z-index:7;display:flex;align-items:center;gap:16px;pointer-events:none;will-change:transform,opacity}
+    #fly{position:fixed;left:0;top:0;transform:translate(0,0) scale(1);z-index:7;display:flex;align-items:center;gap:16px;pointer-events:none;will-change:transform,opacity}
     #fly .logo{width:60px;height:60px;border-radius:18px}
     #fly h1{font-size:clamp(2.4rem,2.2rem + 3vw,4.2rem);font-weight:800;margin:0}
     #fly p{margin:0;color:var(--muted);font-weight:600}
@@ -87,37 +86,6 @@
 
   <footer><span>Made with <span class="material-symbols">favorite</span> & Google Fonts Icons</span><span id="count"></span></footer>
 
-  <script>
-    const fly=document.getElementById('fly');
-    const header=document.getElementById('header');
-    const dock=document.getElementById('brandDock');
-    let anim=null;
-    const clamp=(n,min,max)=>Math.min(Math.max(n,min),max);
-    const lerp=(a,b,t)=>a+(b-a)*t;
-    const compute=()=>{
-      const fr=fly.getBoundingClientRect();
-      const dr=dock.getBoundingClientRect();
-      const cx=window.innerWidth/2-fr.width/2;
-      const cy=window.innerHeight/2-fr.height/2;
-      return{cx,cy,tx:dr.left,ty:dr.top,fs:1,ts:0.58};
-    };
-    let geom=compute();
-    const update=()=>{geom=compute();apply()};
-    const apply=()=>{
-      const s=window.scrollY;
-      const start=0;
-      const end=window.innerHeight*0.5;
-      const t=clamp((s-start)/(end-start),0,1);
-      const x=lerp(geom.cx,geom.tx,t);
-      const y=lerp(geom.cy,geom.ty,t);
-      const sc=lerp(geom.fs,geom.ts,t);
-      fly.style.transform=`translate(${x}px,${y}px) scale(${sc})`;
-      fly.style.opacity=String(1-t*1.1);
-      header.classList.toggle('visible',t>=0.98);
-    };
-    window.addEventListener('scroll',()=>{if(anim)return;anim=requestAnimationFrame(()=>{apply();anim=null})},{passive:true});
-    window.addEventListener('resize',()=>{update()});
-    window.addEventListener('load',()=>{update();apply()});
-  </script>
+  <script>try{history.scrollRestoration='manual';}catch(e){};const fly=document.getElementById('fly');const header=document.getElementById('header');const dock=document.getElementById('brandDock');let anim=null;const clamp=(n,min,max)=>Math.min(Math.max(n,min),max);const lerp=(a,b,t)=>a+(b-a)*t;const compute=()=>{const fr=fly.getBoundingClientRect();const dr=dock.getBoundingClientRect();const cx=window.innerWidth/2-fr.width/2;const cy=window.innerHeight/2-fr.height/2;return{cx,cy,tx:dr.left,ty:dr.top,fs:1,ts:.58}};let geom=compute();const apply=()=>{const s=window.scrollY;const start=0;const end=window.innerHeight*.6;const t=clamp((s-start)/(end-start),0,1);const x=lerp(geom.cx,geom.tx,t);const y=lerp(geom.cy,geom.ty,t);const sc=lerp(geom.fs,geom.ts,t);fly.style.transform=`translate(${x}px,${y}px) scale(${sc})`;fly.style.opacity=String(1-t*1.1);header.classList.toggle('visible',t>=.98)};const update=()=>{geom=compute();apply()};window.addEventListener('scroll',()=>{if(anim)return;anim=requestAnimationFrame(()=>{apply();anim=null})},{passive:true});window.addEventListener('resize',update);const resetToTop=()=>{window.scrollTo(0,0);update();apply()};window.addEventListener('load',()=>{resetToTop();setTimeout(resetToTop,0)});window.addEventListener('pageshow',e=>{if(e.persisted){resetToTop()}});window.addEventListener('beforeunload',()=>{window.scrollTo(0,0)});</script>
 </body>
 </html>
