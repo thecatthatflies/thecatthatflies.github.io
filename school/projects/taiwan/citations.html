@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Citations - Taiwan Research Project</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    html, body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #111827;
+      color: white;
+    }
+
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-out;
+    }
+
+    .fade-in-section.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    .leaf {
+      position: fixed;
+      top: -10px;
+      pointer-events: auto;
+      animation: fall linear infinite;
+      opacity: 0.6;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .bg-hero {
+      background-image: url('/images/taiwan-landscape.png');
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- Navigation -->
+  <nav class="bg-gradient-to-r from-yellow-400 to-red-400 text-white shadow-md py-4">
+    <div class="container mx-auto flex justify-between items-center px-6 relative">
+      <div class="flex items-center">
+        <img src="/images/logo.png" alt="Taiwan Research Logo" class="h-10 mr-3">
+        <h1 class="text-xl font-bold tracking-wide">Taiwan Research Project</h1>
+      </div>
+      <ul class="flex space-x-6 text-lg">
+        <li><a href="index.html" class="hover:text-yellow-100 transition">Home</a></li>
+        <li><a href="zoologist.html" class="hover:text-yellow-100 transition">Zoologist</a></li>
+        <li><a href="geographer.html" class="hover:text-yellow-100 transition">Geographer</a></li>
+        <li><a href="artist.html" class="hover:text-yellow-100 transition">Artist</a></li>
+        <li><a href="tour-guide.html" class="hover:text-yellow-100 transition">Tour Guide</a></li>
+        <li><a href="historian.html" class="hover:text-yellow-100 transition">Historian</a></li>
+        <li><a href="citations.html" class="hover:text-yellow-100 transition">Citations</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header id="home" class="relative bg-hero min-h-screen pt-32 pb-20 flex items-center justify-center text-center">
+    <div class="z-10 text-white px-4">
+      <h2 class="text-5xl font-extrabold drop-shadow-lg mb-4">Citations</h2>
+      <p class="text-xl mb-8 drop-shadow-sm">All resources used for this project.</p>
+    </div>
+    <div class="absolute inset-0 bg-black opacity-40"></div>
+  </header>
+
+<main class="container mx-auto px-6 py-10 space-y-10">
+  <h2 class="text-4xl font-bold text-yellow-300 mb-6">Full Citations</h2>
+
+  <h3 class="text-2xl font-semibold text-black">🐾 Zoologist Page</h3>
+  <ul class="list-disc ml-6 space-y-2 text-black">
+    <li>Taiwan Forestry Research Institute. “Wildlife in Taiwan.” Taiwan Forestry Bureau, <a href="https://www.forest.gov.tw" class="text-yellow-300 underline hover:text-yellow-400">www.forest.gov.tw</a>.</li>
+    <li>Animal Diversity Web. “Prionailurus bengalensis.” University of Michigan, <a href="https://animaldiversity.org" class="text-yellow-300 underline hover:text-yellow-400">animaldiversity.org</a>.</li>
+    <li>“Formosan Black Bear.” Taiwan Bear Association, <a href="https://www.taiwanbear.org.tw" class="text-yellow-300 underline hover:text-yellow-400">www.taiwanbear.org.tw</a>.</li>
+    <li>“Sika Deer.” Taiwan Forestry Bureau, <a href="https://www.forest.gov.tw" class="text-yellow-300 underline hover:text-yellow-400">www.forest.gov.tw</a>.</li>
+    <li>“Small-Clawed Otter Facts.” World Wildlife Fund, <a href="https://www.worldwildlife.org" class="text-yellow-300 underline hover:text-yellow-400">www.worldwildlife.org</a>.</li>
+    <li>“Scaly-Breasted Munia.” Birds of Taiwan, <a href="https://www.birdsoftaiwan.org" class="text-yellow-300 underline hover:text-yellow-400">www.birdsoftaiwan.org</a>.</li>
+    <li>“Chinese Pangolin.” IUCN Red List, <a href="https://www.iucnredlist.org" class="text-yellow-300 underline hover:text-yellow-400">www.iucnredlist.org</a>.</li>
+    <li>“Yellow-Throated Marten.” Taiwan Environmental Info Association, <a href="https://www.teia.tw" class="text-yellow-300 underline hover:text-yellow-400">www.teia.tw</a>.</li>
+    <li>“Formosan Rock Macaque.” Taipei Zoo, <a href="https://www.zoo.gov.taipei" class="text-yellow-300 underline hover:text-yellow-400">www.zoo.gov.taipei</a>.</li>
+    <li>“Rana longicrus.” AmphibiaWeb, <a href="https://amphibiaweb.org" class="text-yellow-300 underline hover:text-yellow-400">amphibiaweb.org</a>.</li>
+    <li>“Japalura polygonata.” Reptile Database, <a href="https://reptile-database.reptarium.cz" class="text-yellow-300 underline hover:text-yellow-400">reptile-database.reptarium.cz</a>.</li>
+  </ul>
+
+  <h3 class="text-2xl font-semibold text-black mt-10">🌱 Geographer Page</h3>
+  <ul class="list-disc ml-6 space-y-2 text-black">
+    <li>Central Weather Bureau. “Climate of Taiwan.” Republic of China (Taiwan), <a href="https://www.cwb.gov.tw" class="text-yellow-300 underline hover:text-yellow-400">www.cwb.gov.tw</a>.</li>
+    <li>Taiwan Tourism Bureau. “Geography and Nature.” <a href="https://www.taiwan.net.tw" class="text-yellow-300 underline hover:text-yellow-400">www.taiwan.net.tw</a>.</li>
+    <li>“Flora of Taiwan.” National Taiwan University, <a href="https://flora.nt.ntu.edu.tw" class="text-yellow-300 underline hover:text-yellow-400">flora.nt.ntu.edu.tw</a>.</li>
+    <li>Lin, W. (2020). “Natural Disasters in Taiwan.” Taiwan Today, <a href="https://www.taiwantoday.tw" class="text-yellow-300 underline hover:text-yellow-400">www.taiwantoday.tw</a>.</li>
+    <li>“Geographical Features of Taiwan.” Taiwan Panorama, <a href="https://www.taiwan-panorama.com" class="text-yellow-300 underline hover:text-yellow-400">www.taiwan-panorama.com</a>.</li>
+  </ul>
+
+  <h3 class="text-2xl font-semibold text-black mt-10">🎨 Artist Page</h3>
+  <ul class="list-disc ml-6 space-y-2 text-black">
+    <li>Ministry of Culture. “Traditional Arts.” Taiwan Culture Portal, <a href="https://english.moc.gov.tw" class="text-yellow-300 underline hover:text-yellow-400">english.moc.gov.tw</a>.</li>
+    <li>“Hakka Music and Culture.” Hakka Affairs Council, <a href="https://www.hakka.gov.tw" class="text-yellow-300 underline hover:text-yellow-400">www.hakka.gov.tw</a>.</li>
+    <li>“Calligraphy and Ink Wash Painting in Taiwan.” Taiwan Academy, <a href="https://www.taiwanacademy.tw" class="text-yellow-300 underline hover:text-yellow-400">www.taiwanacademy.tw</a>.</li>
+    <li>“Taiwanese Puppet Theatre.” Taipei Cultural Center, <a href="https://www.tpecc.org" class="text-yellow-300 underline hover:text-yellow-400">www.tpecc.org</a>.</li>
+    <li>“Taiwanese Aboriginal Culture.” Council of Indigenous Peoples, <a href="https://www.cip.gov.tw" class="text-yellow-300 underline hover:text-yellow-400">www.cip.gov.tw</a>.</li>
+    <li>“Lantern Making in Taiwan.” Taiwan Lantern Festival, <a href="https://www.taiwan.net.tw" class="text-yellow-300 underline hover:text-yellow-400">www.taiwan.net.tw</a>.</li>
+    <li>“Bamboo Craft in Taiwan.” Taiwan Panorama, <a href="https://www.taiwan-panorama.com" class="text-yellow-300 underline hover:text-yellow-400">www.taiwan-panorama.com</a>.</li>
+  </ul>
+
+  <h3 class="text-2xl font-semibold text-black mt-10">🧭 Tour Guide Page</h3>
+  <ul class="list-disc ml-6 space-y-2 text-black">
+    <li>Taiwan Tourism Bureau. “Top Tourist Attractions.” <a href="https://www.taiwan.net.tw" class="text-yellow-300 underline hover:text-yellow-400">www.taiwan.net.tw</a>.</li>
+    <li>“Taroko National Park.” <a href="https://www.taroko.gov.tw" class="text-yellow-300 underline hover:text-yellow-400">www.taroko.gov.tw</a>.</li>
+    <li>“Taipei 101.” Taipei Financial Center Corp., <a href="https://www.taipei-101.com.tw" class="text-yellow-300 underline hover:text-yellow-400">www.taipei-101.com.tw</a>.</li>
+    <li>“Shilin Night Market.” Taipei Travel Net, <a href="https://www.travel.taipei" class="text-yellow-300 underline hover:text-yellow-400">www.travel.taipei</a>.</li>
+    <li>“Sky Lantern Festival in Pingxi.” Taiwan News, <a href="https://www.taiwannews.com.tw" class="text-yellow-300 underline hover:text-yellow-400">www.taiwannews.com.tw</a>.</li>
+    <li>“Sun Moon Lake Cycling.” Sun Moon Lake National Scenic Area, <a href="https://www.sunmoonlake.gov.tw" class="text-yellow-300 underline hover:text-yellow-400">www.sunmoonlake.gov.tw</a>.</li>
+    <li>“Dragon Boat Festival.” Taiwan Today, <a href="https://www.taiwantoday.tw" class="text-yellow-300 underline hover:text-yellow-400">www.taiwantoday.tw</a>.</li>
+  </ul>
+
+  <h3 class="text-2xl font-semibold text-black mt-10">🕰️ Historian Page</h3>
+  <ul class="list-disc ml-6 space-y-2 text-black">
+    <li>“Taiwan History Timeline.” BBC Bitesize, <a href="https://www.bbc.co.uk" class="text-yellow-300 underline hover:text-yellow-400">www.bbc.co.uk</a>.</li>
+    <li>Copper, John F. Taiwan: Nation-State or Province? Routledge, 2019.</li>
+    <li>Roy, Denny. Taiwan: A Political History. Cornell University Press, 2003.</li>
+    <li>“228 Incident.” Taipei Times, <a href="https://www.taipeitimes.com" class="text-yellow-300 underline hover:text-yellow-400">www.taipeitimes.com</a>.</li>
+    <li>“White Terror Period.” Taiwan Transitional Justice Commission, <a href="https://www.tjc.gov.tw" class="text-yellow-300 underline hover:text-yellow-400">www.tjc.gov.tw</a>.</li>
+    <li>“Taiwan's Democratic Reforms.” Freedom House, <a href="https://freedomhouse.org" class="text-yellow-300 underline hover:text-yellow-400">freedomhouse.org</a>.</li>
+  </ul>
+</main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-6">
+    <p>&copy; 2025 Taiwan Research Project. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    // Blossom
+    const sound = new Audio("mail-sent.mp3");
+    sound.volume = 0.3;
+
+    function createLeaf() {
+      const leaf = document.createElement("div");
+      leaf.className = "leaf";
+      leaf.textContent = "🌸";
+      leaf.style.left = Math.random() * 100 + "vw";
+      leaf.style.animationDuration = (Math.random() * 10 + 5) + "s";
+      leaf.onclick = () => sound.cloneNode().play();
+      document.body.appendChild(leaf);
+      setTimeout(() => leaf.remove(), 15000);
+    }
+    setInterval(createLeaf, 700);
+
+    // Scroll fade
+    const faders = document.querySelectorAll('.fade-in-section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    faders.forEach(f => observer.observe(f));
+</body>
+</html>

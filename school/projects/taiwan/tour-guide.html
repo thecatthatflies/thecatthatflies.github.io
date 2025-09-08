@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tour Guide - Taiwan Research Project</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    html, body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #111827;
+      color: white;
+    }
+
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-out;
+    }
+
+    .fade-in-section.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    .leaf {
+      position: fixed;
+      top: -10px;
+      pointer-events: auto;
+      animation: fall linear infinite;
+      opacity: 0.6;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .bg-hero {
+      background-image: url('/images/taiwan-landscape.png');
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- Navigation -->
+  <nav class="bg-gradient-to-r from-yellow-400 to-red-400 text-white shadow-md py-4">
+    <div class="container mx-auto flex justify-between items-center px-6 relative">
+      <div class="flex items-center">
+        <img src="/images/logo.png" alt="Taiwan Research Logo" class="h-10 mr-3">
+        <h1 class="text-xl font-bold tracking-wide">Taiwan Research Project</h1>
+      </div>
+      <ul class="flex space-x-6 text-lg">
+        <li><a href="index.html" class="hover:text-yellow-100 transition">Home</a></li>
+        <li><a href="zoologist.html" class="hover:text-yellow-100 transition">Zoologist</a></li>
+        <li><a href="geographer.html" class="hover:text-yellow-100 transition">Geographer</a></li>
+        <li><a href="artist.html" class="hover:text-yellow-100 transition">Artist</a></li>
+        <li><a href="tour-guide.html" class="hover:text-yellow-100 transition">Tour Guide</a></li>
+        <li><a href="historian.html" class="hover:text-yellow-100 transition">Historian</a></li>
+        <li><a href="citations.html" class="hover:text-yellow-100 transition">Citations</a></li>
+      </ul>
+  </nav>
+
+  <!-- Hero Header -->
+  <header id="home" class="relative bg-hero min-h-screen pt-32 pb-20 flex items-center justify-center text-center">
+    <div class="z-10 text-white px-4">
+      <h2 class="text-5xl font-extrabold drop-shadow-lg mb-4">Taiwan's Wonderous Attractions</h2>
+      <p class="text-xl mb-8 drop-shadow-sm">See the diversity of Taiwan's food, culture, and design.</p>
+    </div>
+    <div class="absolute inset-0 bg-black opacity-40"></div>
+  </header>
+
+<main class="container mx-auto px-6 py-12 space-y-16">
+  <h2 class="text-4xl font-extrabold text-center text-yellow-700">Touring Taiwan</h2>
+  <p class="text-center text-lg text-gray-700 dark:text-gray-300 max-w-2xl mx-auto">From sky lanterns to spicy night markets, explore the rich mix of landscapes, culture, and traditions that make Taiwan unforgettable.</p>
+
+  <!-- Taipei 101 -->
+  <section class="flex flex-col md:flex-row items-center gap-10 fade-in-section">
+    <img src="images/tour-guide-images/Taipei 101.png" alt="Taipei 101 skyscraper at sunset" class="w-full max-w-md rounded-xl shadow-lg"/>
+    <div>
+      <h3 class="text-3xl font-bold mb-2 text-yellow-800">Taipei 101</h3>
+      <p class="text-gray-800 dark:text-gray-200">Once the world’s tallest building, Taipei 101 is a symbol of modern Taiwan. Its bamboo-inspired design rises above the city, with a high-speed elevator and breathtaking observation deck views.</p>
+    </div>
+  </section>
+
+  <!-- Taroko Gorge -->
+  <section class="flex flex-col-reverse md:flex-row items-center gap-10 fade-in-section">
+    <div>
+      <h3 class="text-3xl font-bold mb-2 text-yellow-800">Taroko Gorge</h3>
+      <p class="text-gray-800 dark:text-gray-200">A stunning marble canyon carved by the Liwu River, Taroko Gorge is perfect for hiking, cliffside temples, and turquoise waters. It’s one of Taiwan’s top natural wonders.</p>
+    </div>
+    <img src="images/tour-guide-images/Taroko Gorge.png" alt="Taroko Gorge with cliffs and river" class="w-full max-w-md rounded-xl shadow-lg"/>
+  </section>
+
+  <!-- Chiang Kai-shek Memorial Hall -->
+  <section class="flex flex-col md:flex-row items-center gap-10 fade-in-section">
+    <img src="images/tour-guide-images/Chiang Kai-shek Memorial Hall.png" alt="Chiang Kai-shek Memorial in Taipei" class="w-full max-w-md rounded-xl shadow-lg"/>
+    <div>
+      <h3 class="text-3xl font-bold mb-2 text-yellow-800">Chiang Kai-shek Memorial Hall</h3>
+      <p class="text-gray-800 dark:text-gray-200">This historic monument honors Taiwan’s former leader and includes a museum, wide gardens, and a ceremonial guard. It’s both a place of remembrance and a symbol of democracy.</p>
+    </div>
+  </section>
+
+  <!-- Beef Noodle Soup -->
+  <section class="flex flex-col-reverse md:flex-row items-center gap-10 fade-in-section">
+    <div>
+      <h3 class="text-3xl font-bold mb-2 text-yellow-800">Beef Noodle Soup</h3>
+      <p class="text-gray-800 dark:text-gray-200">A beloved Taiwanese comfort food, this dish combines tender beef, chewy noodles, and rich soy broth. It’s served everywhere from night markets to fine restaurants.</p>
+    </div>
+    <img src="images/tour-guide-images/Beef Noodle Soup.png" alt="Bowl of Taiwanese beef noodle soup" class="w-full max-w-md rounded-xl shadow-lg"/>
+  </section>
+
+  <!-- Pineapple Cakes -->
+  <section class="flex flex-col md:flex-row items-center gap-10 fade-in-section">
+    <img src="images/tour-guide-images/Pineapple Cakes.png" alt="Taiwanese pineapple cakes on a plate" class="w-full max-w-md rounded-xl shadow-lg"/>
+    <div>
+      <h3 class="text-3xl font-bold mb-2 text-yellow-800">Pineapple Cakes</h3>
+      <p class="text-gray-800 dark:text-gray-200">Sweet, buttery, and slightly tangy — these shortbread-like pastries are a top souvenir. Locals gift them for luck and hospitality during holidays.</p>
+    </div>
+  </section>
+
+  <!-- Pingxi Sky Lantern Festival -->
+  <section class="flex flex-col-reverse md:flex-row items-center gap-10 fade-in-section">
+    <div>
+      <h3 class="text-3xl font-bold mb-2 text-yellow-800">Pingxi Sky Lantern Festival</h3>
+      <p class="text-gray-800 dark:text-gray-200">Each February, thousands release glowing paper lanterns into the night sky. Wishes are written on the lanterns, creating a floating sea of light in the Pingxi District.</p>
+    </div>
+    <img src="images/tour-guide-images/Pingxi Sky Lantern Festival.png" alt="Sky lanterns rising during the Pingxi festival" class="w-full max-w-md rounded-xl shadow-lg"/>
+  </section>
+
+  <!-- Dragon Boat Festival -->
+  <section class="flex flex-col md:flex-row items-center gap-10 fade-in-section">
+    <img src="images/tour-guide-images/Dragon Boat Festival.png" alt="Dragon boat racing on a river in Taiwan" class="w-full max-w-md rounded-xl shadow-lg"/>
+    <div>
+      <h3 class="text-3xl font-bold mb-2 text-yellow-800">Dragon Boat Festival</h3>
+      <p class="text-gray-800 dark:text-gray-200">Held every summer, this festival features intense boat races, rice dumplings (zongzi), and celebrations that honor loyalty and tradition across Taiwan’s rivers and lakes.</p>
+    </div>
+  </section>
+
+  <!-- Alishan Forest Railway -->
+  <section class="flex flex-col-reverse md:flex-row items-center gap-10 fade-in-section">
+    <div>
+      <h3 class="text-3xl font-bold mb-2 text-yellow-800">Alishan Forest Railway</h3>
+      <p class="text-gray-800 dark:text-gray-200">Ride through misty mountains, tea fields, and towering cedars on this narrow-gauge railway. It’s one of the most scenic train journeys in Asia.</p>
+    </div>
+    <img src="images/tour-guide-images/Alishan Forest Railway.png" alt="Alishan forest train passing through foggy woods" class="w-full max-w-md rounded-xl shadow-lg"/>
+  </section>
+
+  <!-- Shilin Night Market -->
+  <section class="flex flex-col md:flex-row items-center gap-10 fade-in-section">
+    <img src="images/tour-guide-images/Shilin Night Market.png" alt="Busy street at Shilin Night Market with food stalls" class="w-full max-w-md rounded-xl shadow-lg"/>
+    <div>
+      <h3 class="text-3xl font-bold mb-2 text-yellow-800">Shilin Night Market</h3>
+      <p class="text-gray-800 dark:text-gray-200">This iconic Taipei market comes alive at night with sizzling street food, games, and shops. Try bubble tea, stinky tofu, and fried chicken under glowing lanterns.</p>
+    </div>
+  </section>
+
+  <!-- Sun Moon Lake Cycling -->
+  <section class="flex flex-col-reverse md:flex-row items-center gap-10 fade-in-section">
+    <div>
+      <h3 class="text-3xl font-bold mb-2 text-yellow-800">Sun Moon Lake Cycling</h3>
+      <p class="text-gray-800 dark:text-gray-200">Pedal around Taiwan’s most scenic lake, framed by forested hills and temples. The lakeside bike trail offers stunning views and peaceful vibes, perfect for a day trip.</p>
+    </div>
+    <img src="images/tour-guide-images/Sun Moon Lake Cycling.png" alt="Cyclist riding near Sun Moon Lake with reflections" class="w-full max-w-md rounded-xl shadow-lg"/>
+  </section>
+</main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-6">
+    <p>&copy; 2025 Taiwan Research Project. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    // Blossom
+    const sound = new Audio("mail-sent.mp3");
+    sound.volume = 0.3;
+
+    function createLeaf() {
+      const leaf = document.createElement("div");
+      leaf.className = "leaf";
+      leaf.textContent = "🌸";
+      leaf.style.left = Math.random() * 100 + "vw";
+      leaf.style.animationDuration = (Math.random() * 10 + 5) + "s";
+      leaf.onclick = () => sound.cloneNode().play();
+      document.body.appendChild(leaf);
+      setTimeout(() => leaf.remove(), 15000);
+    }
+    setInterval(createLeaf, 700);
+
+    // Scroll fade
+    const faders = document.querySelectorAll('.fade-in-section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    faders.forEach(f => observer.observe(f));
+    
+    // Init
+    setTheme(localStorage.getItem("theme") || "auto");
+  </script>
+</body>
+</html>

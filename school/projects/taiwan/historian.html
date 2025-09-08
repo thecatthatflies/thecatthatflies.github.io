@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Historian - Taiwan Research Project</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    html, body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #111827;
+      color: white;
+    }
+    
+    .carousel-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease;
+      width: 100%;
+    }
+
+    .carousel-card {
+      min-width: 100%;
+      box-sizing: border-box;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .carousel-card img {
+      margin: 0 auto 1rem;
+      border-radius: 1rem;
+      max-height: 300px;
+    }
+
+    .carousel-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2rem;
+      background: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: white;
+      cursor: pointer;
+      z-index: 10;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+    }
+
+    .carousel-button.prev {
+      left: 1rem;
+    }
+
+    .carousel-button.next {
+      right: 1rem;
+    }
+
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-out;
+    }
+
+    .fade-in-section.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    .leaf {
+      position: fixed;
+      top: -10px;
+      pointer-events: auto;
+      animation: fall linear infinite;
+      opacity: 0.6;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .bg-hero {
+      background-image: url('/images/taiwan-landscape.png');
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- Navigation -->
+  <nav class="bg-gradient-to-r from-yellow-400 to-red-400 text-white shadow-md py-4">
+    <div class="container mx-auto flex justify-between items-center px-6 relative">
+      <div class="flex items-center">
+        <img src="/images/logo.png" alt="Taiwan Research Logo" class="h-10 mr-3">
+        <h1 class="text-xl font-bold tracking-wide">Taiwan Research Project</h1>
+      </div>
+      <ul class="flex space-x-6 text-lg">
+        <li><a href="index.html" class="hover:text-yellow-100 transition">Home</a></li>
+        <li><a href="zoologist.html" class="hover:text-yellow-100 transition">Zoologist</a></li>
+        <li><a href="geographer.html" class="hover:text-yellow-100 transition">Geographer</a></li>
+        <li><a href="artist.html" class="hover:text-yellow-100 transition">Artist</a></li>
+        <li><a href="tour-guide.html" class="hover:text-yellow-100 transition">Tour Guide</a></li>
+        <li><a href="historian.html" class="hover:text-yellow-100 transition">Historian</a></li>
+        <li><a href="citations.html" class="hover:text-yellow-100 transition">Citations</a></li>
+      </ul>
+  </nav>
+
+  <!-- Hero Header -->
+  <header id="home" class="relative bg-hero min-h-screen pt-32 pb-20 flex items-center justify-center text-center">
+    <div class="z-10 text-white px-4">
+      <h2 class="text-5xl font-extrabold drop-shadow-lg mb-4">Taiwan's Fascinating History</h2>
+      <p class="text-xl mb-8 drop-shadow-sm">Dive deeper into Taiwan's background.</p>
+    </div>
+    <div class="absolute inset-0 bg-black opacity-40"></div>
+  </header>
+
+<main class="container mx-auto px-6 py-12 space-y-10 dark text-white bg-gray-900">
+  <h2 class="text-4xl font-bold text-yellow-300 text-center">Taiwan’s Historical Timeline</h2>
+  <p class="text-center text-lg text-gray-300 max-w-2xl mx-auto mb-10">Explore the turning points in Taiwan’s past, from early settlement to modern democracy.</p>
+
+  <div class="flex flex-col space-y-8">
+    <!-- Indigenous Peoples -->
+    <section class="bg-gray-800 rounded-xl p-6 flex flex-col md:flex-row gap-6 items-center">
+      <img src="images/historian-images/Indigenous%20Peoples%20Settlement.png" alt="Indigenous Peoples" class="w-full max-w-xs rounded-lg" />
+      <div>
+        <h3 class="text-2xl font-bold text-yellow-300 mb-2">Indigenous Settlement</h3>
+        <p>Taiwan’s earliest settlers were Austronesian-speaking Indigenous tribes, who arrived over 6,000 years ago. Their unique languages, oral traditions, and spiritual practices still echo in Taiwan’s cultural identity today.</p>
+      </div>
+    </section>
+
+    <!-- Dutch and Spanish -->
+    <section class="bg-gray-800 rounded-xl p-6 flex flex-col md:flex-row gap-6 items-center">
+      <img src="images/historian-images/Dutch%20and%20Spanish%20Colonization.png" alt="Dutch and Spanish Colonization" class="w-full max-w-xs rounded-lg" />
+      <div>
+        <h3 class="text-2xl font-bold text-yellow-300 mb-2">Dutch and Spanish Colonization</h3>
+        <p>In the 1600s, the Dutch and Spanish established trading posts and fortresses on Taiwan. While short-lived, their rule introduced Christianity and maritime trade routes that shaped Taiwan’s role in global commerce.</p>
+      </div>
+    </section>
+
+    <!-- Koxinga -->
+    <section class="bg-gray-800 rounded-xl p-6 flex flex-col md:flex-row gap-6 items-center">
+      <img src="images/historian-images/Koxinga%20Takes%20Taiwan.png" alt="Koxinga Takes Taiwan" class="w-full max-w-xs rounded-lg" />
+      <div>
+        <h3 class="text-2xl font-bold text-yellow-300 mb-2">Koxinga Takes Taiwan (1662)</h3>
+        <p>In 1662, Ming loyalist Zheng Chenggong (Koxinga) expelled the Dutch and established a Chinese stronghold in Taiwan. His rule marked the beginning of lasting Han Chinese cultural influence.</p>
+      </div>
+    </section>
+
+    <!-- Qing Rule -->
+    <section class="bg-gray-800 rounded-xl p-6 flex flex-col md:flex-row gap-6 items-center">
+      <img src="images/historian-images/Qing%20Dynasty%20Rule%20Begins.png" alt="Qing Rule" class="w-full max-w-xs rounded-lg" />
+      <div>
+        <h3 class="text-2xl font-bold text-yellow-300 mb-2">Qing Dynasty Rule (1683)</h3>
+        <p>The Qing Empire annexed Taiwan in 1683, integrating it as a prefecture of Fujian Province. Waves of Han Chinese immigrants settled the island, farming and developing coastal cities.</p>
+      </div>
+    </section>
+
+    <!-- Japanese Colonial Period -->
+    <section class="bg-gray-800 rounded-xl p-6 flex flex-col md:flex-row gap-6 items-center">
+      <img src="images/historian-images/Japanese%20Colonial%20Period.png" alt="Japanese Colonial Period" class="w-full max-w-xs rounded-lg" />
+      <div>
+        <h3 class="text-2xl font-bold text-yellow-300 mb-2">Japanese Rule (1895–1945)</h3>
+        <p>Following the Treaty of Shimonoseki in 1895, Japan ruled Taiwan for 50 years. Though repressive, Japan built modern infrastructure, schools, railroads, and industries still visible today.</p>
+      </div>
+    </section>
+
+    <!-- 228 Incident -->
+    <section class="bg-gray-800 rounded-xl p-6 flex flex-col md:flex-row gap-6 items-center">
+      <img src="images/historian-images/228%20Incident.png" alt="228 Incident" class="w-full max-w-xs rounded-lg" />
+      <div>
+        <h3 class="text-2xl font-bold text-yellow-300 mb-2">228 Incident (1947)</h3>
+        <p>On February 28, 1947, protests over police brutality escalated into a violent crackdown by the Kuomintang (KMT). Thousands were killed, and the event became a symbol of suppressed freedom.</p>
+      </div>
+    </section>
+
+    <!-- Martial Law Imposed -->
+    <section class="bg-gray-800 rounded-xl p-6 flex flex-col md:flex-row gap-6 items-center">
+      <img src="images/historian-images/Martial%20Law%20Imposed.png" alt="Martial Law Begins" class="w-full max-w-xs rounded-lg" />
+      <div>
+        <h3 class="text-2xl font-bold text-yellow-300 mb-2">Martial Law Imposed (1949)</h3>
+        <p>In 1949, after fleeing China, the KMT imposed martial law on Taiwan. Civil liberties were suspended, dissent was punished, and one-party rule lasted for nearly four decades.</p>
+      </div>
+    </section>
+
+    <!-- Martial Law Lifted -->
+    <section class="bg-gray-800 rounded-xl p-6 flex flex-col md:flex-row gap-6 items-center">
+      <img src="images/historian-images/Martial%20Law%20Lifted.png" alt="Martial Law Lifted" class="w-full max-w-xs rounded-lg" />
+      <div>
+        <h3 class="text-2xl font-bold text-yellow-300 mb-2">Martial Law Lifted (1987)</h3>
+        <p>In 1987, martial law was lifted, opening the path to democracy. New political parties, social movements, and press freedom began reshaping the island’s future.</p>
+      </div>
+    </section>
+
+    <!-- First Democratic Election -->
+    <section class="bg-gray-800 rounded-xl p-6 flex flex-col md:flex-row gap-6 items-center">
+      <img src="images/historian-images/First%20Democratic%20Election.png" alt="First Democratic Election" class="w-full max-w-xs rounded-lg" />
+      <div>
+        <h3 class="text-2xl font-bold text-yellow-300 mb-2">First Democratic Election (1996)</h3>
+        <p>In 1996, Taiwan held its first direct presidential election. It marked a major milestone in democratization, with peaceful voting and widespread international recognition.</p>
+      </div>
+    </section>
+
+    <!-- Modern Democratic Taiwan -->
+    <section class="bg-gray-800 rounded-xl p-6 flex flex-col md:flex-row gap-6 items-center">
+      <img src="images/historian-images/Modern%20Democratic%20Taiwan.png" alt="Modern Taiwan" class="w-full max-w-xs rounded-lg" />
+      <div>
+        <h3 class="text-2xl font-bold text-yellow-300 mb-2">Modern Democratic Taiwan</h3>
+        <p>Today, Taiwan is a vibrant democracy known for its technology, education, and strong civic participation. It remains a beacon of progress in East Asia with a unique global presence.</p>
+      </div>
+    </section>
+  </div>
+</main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-6">
+    <p>&copy; 2025 Taiwan Research Project. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    // Carousel
+    let currentIndex = 0;
+    const carouselElement = document.getElementById("carouselTrack");
+    const totalSlides = carouselElement.children.length;
+
+    function scrollSlide(direction) {
+      currentIndex += direction;
+      if (currentIndex < 0) currentIndex = totalSlides - 1;
+      if (currentIndex >= totalSlides) currentIndex = 0;
+      carouselElement.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+    
+    // Blossom
+    const sound = new Audio("mail-sent.mp3");
+    sound.volume = 0.3;
+
+    function createLeaf() {
+      const leaf = document.createElement("div");
+      leaf.className = "leaf";
+      leaf.textContent = "🌸";
+      leaf.style.left = Math.random() * 100 + "vw";
+      leaf.style.animationDuration = (Math.random() * 10 + 5) + "s";
+      leaf.onclick = () => sound.cloneNode().play();
+      document.body.appendChild(leaf);
+      setTimeout(() => leaf.remove(), 15000);
+    }
+    setInterval(createLeaf, 700);
+
+    // Scroll fade
+    const faders = document.querySelectorAll('.fade-in-section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    faders.forEach(f => observer.observe(f));
+
+    // Theme switcher
+    const html = document.documentElement;
+    const themeIcon = document.getElementById("themeIcon");
+    const themeToggle = document.getElementById("themeToggle");
+    const themeMenu = document.getElementById("themeMenu");
+    const dropdown = document.getElementById("themeDropdown");
+    const buttons = themeMenu.querySelectorAll("button");
+
+    function setTheme(theme) {
+      localStorage.setItem("theme", theme);
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      if (theme === "dark" || (theme === "auto" && prefersDark)) {
+        html.classList.add("dark");
+        themeIcon.textContent = "🌙";
+      } else {
+        html.classList.remove("dark");
+        themeIcon.textContent = "☀️";
+      }
+
+      buttons.forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.theme === theme);
+      });
+    }
+
+    buttons.forEach(btn => {
+      btn.onclick = () => {
+        setTheme(btn.dataset.theme);
+        themeMenu.style.display = "none";
+        themeToggle.setAttribute("aria-expanded", "false");
+      };
+    });
+
+    themeToggle.onclick = (e) => {
+      e.stopPropagation();
+      const isOpen = themeMenu.style.display === "block";
+      themeMenu.style.display = isOpen ? "none" : "block";
+      themeToggle.setAttribute("aria-expanded", String(!isOpen));
+    };
+
+    document.addEventListener("click", e => {
+      if (!dropdown.contains(e.target)) {
+        themeMenu.style.display = "none";
+        themeToggle.setAttribute("aria-expanded", "false");
+      }
+    });
+
+    // Init
+    setTheme(localStorage.getItem("theme") || "auto");
+  </script>
+</body>
+</html>

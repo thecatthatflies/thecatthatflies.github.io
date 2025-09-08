@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Artist - Taiwan Research Project</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    html, body {
+      font-family: 'Poppins', sans-serif;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-out;
+    }
+
+    .fade-in-section.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    .leaf {
+      position: fixed;
+      top: -10px;
+      pointer-events: auto;
+      animation: fall linear infinite;
+      opacity: 0.6;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .bg-hero {
+      background-image: url('/images/taiwan-landscape.png');
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .dark body {
+      background-color: #111827;
+      color: white;
+    }
+
+    .dark .bg-white {
+      background-color: #1f2937;
+    }
+
+    .dark .text-black {
+      color: white;
+    }
+
+    .dark .bg-yellow-300 {
+      background-color: #fbbf24;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      right: 0;
+      top: 2.5rem;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      width: 140px;
+      display: none;
+      z-index: 50;
+      padding: 0.25rem 0;
+      font-size: 0.875rem;
+    }
+
+    .dropdown-menu {
+      background: #1f2937;
+      color: white;
+      border-color: #374151;
+    }
+
+    .dropdown-menu button {
+      width: 100%;
+      text-align: left;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      border-radius: 0;
+    }
+
+    .dropdown-menu button[data-theme="light"]:hover {
+      background-color: #ffe8b3;
+    }
+    .dropdown-menu button[data-theme="dark"]:hover {
+      background-color: #2d3748;
+    }
+    .dropdown-menu button[data-theme="auto"]:hover {
+      background-color: #d1d5db;
+    }
+
+    .dropdown-menu button.active {
+      background-color: #ffe4b5
+      font-weight: 600;
+    }
+
+    .dropdown-menu button svg:last-child {
+      display: none;
+      margin-left: auto;
+    }
+
+    .dropdown-menu button.active svg:last-child {
+      display: inline;
+    }
+
+    .icon-button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 1.25rem;
+    }
+
+    .icon-button svg {
+      width: 1rem;
+      height: 1rem;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- Navigation -->
+  <nav class="bg-gradient-to-r from-yellow-400 to-red-400 text-white shadow-md py-4">
+    <div class="container mx-auto flex justify-between items-center px-6 relative">
+      <div class="flex items-center">
+        <img src="/images/logo.png" alt="Taiwan Research Logo" class="h-10 mr-3">
+        <h1 class="text-xl font-bold tracking-wide">Taiwan Research Project</h1>
+      </div>
+      <ul class="flex space-x-6 text-lg">
+        <li><a href="index.html" class="hover:text-yellow-100 transition">Home</a></li>
+        <li><a href="zoologist.html" class="hover:text-yellow-100 transition">Zoologist</a></li>
+        <li><a href="geographer.html" class="hover:text-yellow-100 transition">Geographer</a></li>
+        <li><a href="artist.html" class="hover:text-yellow-100 transition">Artist</a></li>
+        <li><a href="tour-guide.html" class="hover:text-yellow-100 transition">Tour Guide</a></li>
+        <li><a href="historian.html" class="hover:text-yellow-100 transition">Historian</a></li>
+        <li><a href="citations.html" class="hover:text-yellow-100 transition">Citations</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header id="home" class="relative bg-hero min-h-screen pt-32 pb-20 flex items-center justify-center text-center">
+    <div class="z-10 text-white px-4">
+      <h2 class="text-5xl font-extrabold drop-shadow-lg mb-4">The art in Taiwan</h2>
+      <p class="text-xl mb-8 drop-shadow-sm">Admire the beautiful art and culture that lives in Taiwan.</p>
+    </div>
+    <div class="absolute inset-0 bg-black opacity-40"></div>
+  </header>
+
+<main class="container mx-auto px-6 py-10 space-y-10">
+
+  <h2 class="text-4xl font-bold text-blue-900">Art & Culture of Taiwan</h2>
+  <hr class="border-t-4 border-blue-900 mb-6" />
+
+  <!-- Aboriginal Dance -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/artist-images/Aboriginal Dance.png" alt="Aboriginal Dance" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Aboriginal Dance</h2>
+      <p>Indigenous Taiwanese tribes perform traditional dances that tell stories of their ancestry, the harvest, and spiritual beliefs. These dances are vibrant, rhythmic, and deeply rooted in Taiwan’s cultural heritage.</p>
+    </div>
+  </section>
+
+  <!-- Ink Wash Painting -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/artist-images/Ink Wash Painting.png" alt="Ink Wash Painting" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Ink Wash Painting</h2>
+      <p>A classic art form, ink wash painting in Taiwan features mountains, rivers, and plants painted with delicate brushstrokes. It's a symbol of harmony between nature and humanity, passed down from Chinese traditions.</p>
+    </div>
+  </section>
+
+  <!-- Puppet Theater -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/artist-images/Puppet Theater.png" alt="Puppet Theater" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Puppet Theater</h2>
+      <p>Glove puppetry is one of Taiwan’s most celebrated folk art forms. Colorful characters, dramatic music, and intricate hand-carved puppets bring traditional tales to life in street performances and festivals.</p>
+    </div>
+  </section>
+
+  <!-- Aboriginal Clothing -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/artist-images/Aboriginal Clothing.png" alt="Aboriginal Clothing" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Aboriginal Clothing</h2>
+      <p>Taiwan's indigenous groups wear vibrant woven garments that vary by tribe. Patterns often represent nature, family symbols, and cultural history, with headdresses and beads completing ceremonial outfits.</p>
+    </div>
+  </section>
+
+  <!-- Hakka Folk Music -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/artist-images/Hakka Folk Music.png" alt="Hakka Folk Music" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Hakka Folk Music</h2>
+      <p>Hakka songs are passed down orally and used to express daily life, courtship, and farming routines. Instruments like the yueqin (moon lute) and bamboo flutes are commonly used in performances.</p>
+    </div>
+  </section>
+
+  <!-- Garden Design -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/artist-images/Garden Design.png" alt="Garden Design" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Garden Design</h2>
+      <p>Influenced by Chinese aesthetics, traditional Taiwanese gardens use rocks, bridges, ponds, and plants to create peaceful, symbolic spaces. Gardens like Lin An Tai showcase balance between architecture and nature.</p>
+    </div>
+  </section>
+
+  <!-- Calligraphy and Poetry -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/artist-images/Calligraphy and Poetry.png" alt="Calligraphy and Poetry" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Calligraphy & Poetry</h2>
+      <p>Chinese calligraphy is considered a high art in Taiwan. Many artists combine brushwork with original poetry, expressing philosophy and emotion through graceful characters and flowing ink.</p>
+    </div>
+  </section>
+
+  <!-- Traditional Lantern Craft -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/artist-images/Lantern Craft.png" alt="Lantern Craft" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Traditional Lantern Craft</h2>
+      <p>Lantern-making is both an art and tradition in Taiwan, especially during festivals like the Lantern Festival. Each lantern is crafted with care using colored paper and bamboo, often symbolizing hope, prosperity, or ancestral respect.</p>
+    </div>
+  </section>
+
+  <!-- Paper Cutting Art -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/artist-images/Paper Cutting.png" alt="Paper Cutting Art" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Paper Cutting Art</h2>
+      <p>This folk art form involves folding and carving paper into symmetrical, meaningful shapes. Popular during holidays, these designs decorate homes and temples, often depicting animals, floral motifs, or Chinese characters for blessings.</p>
+    </div>
+  </section>
+
+  <!-- Bamboo Weaving -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/artist-images/Bamboo Weaving.png" alt="Bamboo Weaving" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Bamboo Weaving</h2>
+      <p>Skilled artisans in rural Taiwan have long used bamboo to weave baskets, hats, and household items. This eco-friendly craft requires patience and precision, showcasing Taiwan’s deep connection to its natural resources.</p>
+    </div>
+  </section>
+  
+</main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-6">
+    <p>&copy; 2025 Taiwan Research Project. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    // Blossom
+    const sound = new Audio("mail-sent.mp3");
+    sound.volume = 0.3;
+
+    function createLeaf() {
+      const leaf = document.createElement("div");
+      leaf.className = "leaf";
+      leaf.textContent = "🌸";
+      leaf.style.left = Math.random() * 100 + "vw";
+      leaf.style.animationDuration = (Math.random() * 10 + 5) + "s";
+      leaf.onclick = () => sound.cloneNode().play();
+      document.body.appendChild(leaf);
+      setTimeout(() => leaf.remove(), 15000);
+    }
+    setInterval(createLeaf, 700);
+
+    // Scroll fade
+    const faders = document.querySelectorAll('.fade-in-section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    faders.forEach(f => observer.observe(f));
+    
+    // Init
+    setTheme(localStorage.getItem("theme") || "auto");
+  </script>
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Geographer - Taiwan Research Project</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    html, body {
+      font-family: 'Poppins', sans-serif;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-out;
+    }
+
+    .fade-in-section.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    .leaf {
+      position: fixed;
+      top: -10px;
+      pointer-events: auto;
+      animation: fall linear infinite;
+      opacity: 0.6;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .bg-hero {
+      background-image: url('/images/taiwan-landscape.png');
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .dark body {
+      background-color: #111827;
+      color: white;
+    }
+
+    .dark .bg-white {
+      background-color: #1f2937;
+    }
+
+    .dark .text-black {
+      color: white;
+    }
+
+    .dark .bg-yellow-300 {
+      background-color: #fbbf24;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      right: 0;
+      top: 2.5rem;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      width: 140px;
+      display: none;
+      z-index: 50;
+      padding: 0.25rem 0;
+      font-size: 0.875rem;
+    }
+
+    .dropdown-menu {
+      background: #1f2937;
+      color: white;
+      border-color: #374151;
+    }
+
+    .dropdown-menu button {
+      width: 100%;
+      text-align: left;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      border-radius: 0;
+    }
+
+    .dropdown-menu button[data-theme="light"]:hover {
+      background-color: #ffe8b3;
+    }
+    .dropdown-menu button[data-theme="dark"]:hover {
+      background-color: #2d3748;
+    }
+    .dropdown-menu button[data-theme="auto"]:hover {
+      background-color: #d1d5db;
+    }
+
+    .dropdown-menu button.active {
+      background-color: #ffe4b5
+      font-weight: 600;
+    }
+
+    .dropdown-menu button svg:last-child {
+      display: none;
+      margin-left: auto;
+    }
+
+    .dropdown-menu button.active svg:last-child {
+      display: inline;
+    }
+
+    .icon-button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 1.25rem;
+    }
+
+    .icon-button svg {
+      width: 1rem;
+      height: 1rem;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- Navigation -->
+  <nav class="bg-gradient-to-r from-yellow-400 to-red-400 text-white shadow-md py-4">
+    <div class="container mx-auto flex justify-between items-center px-6 relative">
+      <div class="flex items-center">
+        <img src="/images/logo.png" alt="Taiwan Research Logo" class="h-10 mr-3">
+        <h1 class="text-xl font-bold tracking-wide">Taiwan Research Project</h1>
+      </div>
+      <ul class="flex space-x-6 text-lg">
+        <li><a href="index.html" class="hover:text-yellow-100 transition">Home</a></li>
+        <li><a href="zoologist.html" class="hover:text-yellow-100 transition">Zoologist</a></li>
+        <li><a href="geographer.html" class="hover:text-yellow-100 transition">Geographer</a></li>
+        <li><a href="artist.html" class="hover:text-yellow-100 transition">Artist</a></li>
+        <li><a href="tour-guide.html" class="hover:text-yellow-100 transition">Tour Guide</a></li>
+        <li><a href="historian.html" class="hover:text-yellow-100 transition">Historian</a></li>
+        <li><a href="citations.html" class="hover:text-yellow-100 transition">Citations</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header id="home" class="relative bg-hero min-h-screen pt-32 pb-20 flex items-center justify-center text-center">
+    <div class="z-10 text-white px-4">
+      <h2 class="text-5xl font-extrabold drop-shadow-lg mb-4">The Land of Taiwan</h2>
+      <p class="text-xl mb-8 drop-shadow-sm">Uncover the stunning beauty and intricacy of Taiwan's land.</p>
+    </div>
+    <div class="absolute inset-0 bg-black opacity-40"></div>
+  </header>
+
+<main class="container mx-auto px-6 py-10 space-y-10">
+
+  <!-- ========== Landforms Section ========== -->
+  <h2 class="text-4xl font-bold text-blue-900">Major Landforms of Taiwan</h2>
+  <hr class="border-t-4 border-blue-900 mb-6" />
+
+  <!-- Green Island -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/geography-images/Green%20Island.png" alt="Green Island" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Green Island</h2>
+      <p>Green Island is a volcanic island located off Taiwan's east coast. Once home to a political prison in the early 1900s, it is now a popular destination for snorkeling, scuba diving, and exploring coastal nature trails.</p>
+    </div>
+  </section>
+
+  <!-- Sun Moon Lake -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/geography-images/Sun%20Moon%20Lake.png" alt="Sun Moon Lake" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Sun Moon Lake</h2>
+      <p>Surrounded by mountains, Sun Moon Lake sits 2,400 feet above sea level. It’s Taiwan’s largest lake, known for its scenic views, cultural festivals, and annual open-water swimming events.</p>
+    </div>
+  </section>
+
+  <!-- Yushan Range -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/geography-images/Yushan%20Range.png" alt="Yushan Range" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Yushan Range</h2>
+      <p>Yushan, or Jade Mountain, is Taiwan’s highest peak at over 13,000 feet. Sixteen peaks in this range rise above 10,000 feet, offering dramatic alpine scenery.</p>
+    </div>
+  </section>
+
+  <!-- Shifen Waterfall -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/geography-images/Shifen%20Waterfall.png" alt="Shifen Waterfall" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Shifen Waterfall</h2>
+      <p>Shifen Waterfall is Taiwan’s most famous cascade, stretching 40 meters wide and 20 meters tall. Often called the "Little Niagara," it draws visitors for its natural beauty and nearby lantern festivals.</p>
+    </div>
+  </section>
+
+  <!-- Xueshan Range -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/geography-images/Xueshan%20Range.png" alt="Xueshan Range" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Xueshan Range</h2>
+      <p>The Xueshan Range spans roughly 161 miles and includes Taiwan’s second tallest peak. Its rugged trails are a favorite for experienced hikers and nature lovers.</p>
+    </div>
+  </section>
+
+  <!-- Taroko Gorge -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/geography-images/Taoko%20Gorge.png" alt="Taroko Gorge" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Taroko Gorge</h2>
+      <p>Part of a stunning national park, Taroko Gorge features towering cliffs, marble canyons, and mountain peaks that reach up to 9,800 feet. The park covers over 360 square miles of protected land.</p>
+    </div>
+  </section>
+
+  <!-- Maokong Gondola -->
+  <section class="bg-blue-900 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/geography-images/Maokong%20Gondola.png" alt="Maokong Gondola" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h2 class="text-3xl font-bold mb-2">Maokong Gondola</h2>
+      <p>For just four dollars, visitors can enjoy a one-way gondola ride with scenic views of Taipei’s mountains and cityscape. The ride is a relaxing way to experience the landscape from above.</p>
+    </div>
+  </section>
+
+    <!-- ========== Plant Life Section ========== -->
+  <h2 class="text-4xl font-bold text-green-700">Native Plant Life</h2>
+  <hr class="border-t-4 border-green-700 mb-6" />
+
+  <!-- Bishop Wood -->
+  <section class="bg-green-800 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/geography-images/Bishop%20Wood.png" alt="Bishop Wood" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h3 class="text-3xl font-bold mb-2">Bishop Wood</h3>
+      <p>This tree grows to around 30 meters tall and has broad leaves that form a dense canopy. It is commonly planted along roadsides and in parks for shade and environmental benefits.</p>
+    </div>
+  </section>
+
+  <!-- Golden Pothos -->
+  <section class="bg-green-800 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/geography-images/Golden%20Pothos.png" alt="Golden Pothos" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h3 class="text-3xl font-bold mb-2">Golden Pothos</h3>
+      <p>Golden Pothos is a hardy climbing vine with heart-shaped leaves. It thrives in Taiwan's humid climate and is commonly seen growing up tree trunks or across forest floors.</p>
+    </div>
+  </section>
+
+  <!-- Hairy Beggarticks -->
+  <section class="bg-green-800 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/geography-images/Hairy%20Beggarticks.png" alt="Hairy Beggarticks" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h3 class="text-3xl font-bold mb-2">Hairy Beggarticks</h3>
+      <p>Hairy Beggarticks is a weedy herb with bright yellow flowers. While common along roadsides and open fields, it plays a role in soil stabilization and supports pollinators.</p>
+    </div>
+  </section>
+
+  <!-- Oriental False Hawksbeard -->
+  <section class="bg-green-800 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/geography-images/Oriental%20False%20Hawksbeard.png" alt="Oriental False Hawksbeard" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h3 class="text-3xl font-bold mb-2">Oriental False Hawksbeard</h3>
+      <p>This plant resembles dandelions and is often found in grassy areas and forest edges. It spreads quickly and contributes to ground cover biodiversity.</p>
+    </div>
+  </section>
+
+  <!-- Tapa Cloth Tree -->
+  <section class="bg-green-800 text-white rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6">
+    <img src="images/geography-images/Tapa%20Cloth%20Tree.png" alt="Tapa Cloth Tree" class="w-full max-w-xs rounded-lg" />
+    <div>
+      <h3 class="text-3xl font-bold mb-2">Tapa Cloth Tree</h3>
+      <p>Also known as the Paper Mulberry, this tree is culturally significant in Taiwan and other Pacific regions. Its inner bark is used in making traditional textiles and crafts.</p>
+    </div>
+  </section>
+
+  <!-- ========== Climate Section ========== -->
+  <h2 class="text-4xl font-bold text-yellow-500">Climate of Taiwan</h2>
+  <hr class="border-t-4 border-yellow-500 mb-6" />
+
+  <section class="bg-yellow-100 text-gray-800 rounded-2xl p-6">
+    <p>
+      Taiwan’s climate is diverse. It is mostly subtropical, which means the summers are hot and humid, and the winters are mild because of that. In the north, it’s colder, but the south feels hotter and more tropical since it’s closer to the equator. Most of the rain comes in the summer, especially because of the seasonal monsoon winds. Typhoons are also a big part of Taiwan’s weather; they usually show up between July and October and can bring strong winds and have rain, especially along the eastern coast.
+  </br>
+  </br>
+      Rain falls often throughout the year, but the amount of rain that falls depends on what part of Taiwan you are looking at. The mountains in the middle and east of Taiwan get the most, which is why the pictures of those areas look so luscious and beautiful. Because of all the mountains, the weather can change a lot depending on the area. It might be warm and rainy on the coast but cold and foggy in the mountain ranges. The variety in the climate/weather makes Taiwan a very interesting and unique country, and makes Taiwan stand out from other Asian countries.
+    </p>
+  </section>
+
+</main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-6">
+    <p>&copy; 2025 Taiwan Research Project. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    // Blossom
+    const sound = new Audio("mail-sent.mp3");
+    sound.volume = 0.3;
+
+    function createLeaf() {
+      const leaf = document.createElement("div");
+      leaf.className = "leaf";
+      leaf.textContent = "🌸";
+      leaf.style.left = Math.random() * 100 + "vw";
+      leaf.style.animationDuration = (Math.random() * 10 + 5) + "s";
+      leaf.onclick = () => sound.cloneNode().play();
+      document.body.appendChild(leaf);
+      setTimeout(() => leaf.remove(), 15000);
+    }
+    setInterval(createLeaf, 700);
+
+    // Scroll fade
+    const faders = document.querySelectorAll('.fade-in-section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    faders.forEach(f => observer.observe(f));
+    // Init
+    setTheme(localStorage.getItem("theme") || "auto");
+  </script>
+</body>
+</html>

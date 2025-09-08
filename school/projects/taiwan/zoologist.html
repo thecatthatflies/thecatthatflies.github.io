@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Zoologist - Taiwan Research Project</title>
+  <link rel="icon" type="image/x-icon" href="/images/favicon.ico"/>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    html, body {
+      font-family: 'Poppins', sans-serif;
+      transition: background 0.5s, color 0.5s;
+    }
+
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-out;
+    }
+
+    .fade-in-section.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+      }
+    }
+
+    .leaf {
+      position: fixed;
+      top: -10px;
+      pointer-events: auto;
+      animation: fall linear infinite;
+      opacity: 0.6;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .bg-hero {
+      background-image: url('/images/taiwan-landscape.png');
+      background-attachment: fixed;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .dark body {
+      background-color: #111827;
+      color: white;
+    }
+
+    .dark .bg-white {
+      background-color: #1f2937;
+    }
+
+    .dark .text-black {
+      color: white;
+    }
+
+    .dark .bg-yellow-300 {
+      background-color: #fbbf24;
+    }
+
+    .dropdown-menu {
+      position: absolute;
+      right: 0;
+      top: 2.5rem;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      width: 140px;
+      display: none;
+      z-index: 50;
+      padding: 0.25rem 0;
+      font-size: 0.875rem;
+    }
+
+    .dropdown-menu {
+      background: #1f2937;
+      color: white;
+      border-color: #374151;
+    }
+
+    .dropdown-menu button {
+      width: 100%;
+      text-align: left;
+      padding: 0.5rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      border-radius: 0;
+    }
+
+    .dropdown-menu button[data-theme="light"]:hover {
+      background-color: #ffe8b3;
+    }
+    .dropdown-menu button[data-theme="dark"]:hover {
+      background-color: #2d3748;
+    }
+    .dropdown-menu button[data-theme="auto"]:hover {
+      background-color: #d1d5db;
+    }
+
+    .dropdown-menu button.active {
+      background-color: #ffe4b5
+      font-weight: 600;
+    }
+
+    .dropdown-menu button svg:last-child {
+      display: none;
+      margin-left: auto;
+    }
+
+    .dropdown-menu button.active svg:last-child {
+      display: inline;
+    }
+
+    .icon-button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 1.25rem;
+    }
+
+    .icon-button svg {
+      width: 1rem;
+      height: 1rem;
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900">
+
+  <!-- Navigation -->
+  <nav class="bg-gradient-to-r from-yellow-400 to-red-400 text-white shadow-md py-4">
+    <div class="container mx-auto flex justify-between items-center px-6 relative">
+      <div class="flex items-center">
+        <img src="/images/logo.png" alt="Taiwan Research Logo" class="h-10 mr-3">
+        <h1 class="text-xl font-bold tracking-wide">Taiwan Research Project</h1>
+      </div>
+      <ul class="flex space-x-6 text-lg">
+        <li><a href="index.html" class="hover:text-yellow-100 transition">Home</a></li>
+        <li><a href="zoologist.html" class="hover:text-yellow-100 transition">Zoologist</a></li>
+        <li><a href="geographer.html" class="hover:text-yellow-100 transition">Geographer</a></li>
+        <li><a href="artist.html" class="hover:text-yellow-100 transition">Artist</a></li>
+        <li><a href="tour-guide.html" class="hover:text-yellow-100 transition">Tour Guide</a></li>
+        <li><a href="historian.html" class="hover:text-yellow-100 transition">Historian</a></li>
+        <li><a href="citations.html" class="hover:text-yellow-100 transition">Citations</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header id="home" class="relative bg-hero min-h-screen pt-32 pb-20 flex items-center justify-center text-center">
+    <div class="z-10 text-white px-4">
+      <h2 class="text-5xl font-extrabold drop-shadow-lg mb-4">Taiwan's Animals</h2>
+      <p class="text-xl mb-8 drop-shadow-sm">Discover the beauty of Taiwan's fauna.</p>
+    </div>
+    <div class="absolute inset-0 bg-black opacity-40"></div>
+  </header>
+
+<main class="container mx-auto px-6 py-10 space-y-6">
+
+  <!-- Animal 1 -->
+  <details class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4">
+    <summary class="text-xl font-semibold">Leopard Cat</summary>
+    <div class="mt-4">
+      <img src="images/zoologist-pictures/Leopard%20Cat.png" alt="Leopard Cat" class="w-full max-w-sm rounded-lg mb-4" />
+      <p>The Leopard Cat is a small wild feline that lives in Taiwan's forests. It can reach speeds up to 44 mph and resembles a wild version of a house cat. It was among the first cats to be domesticated in Asia and is now considered a symbol of Taiwan’s native wildlife.</p>
+    </div>
+  </details>
+
+  <!-- Animal 2 -->
+  <details class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4">
+    <summary class="text-xl font-semibold">Asiatic Black Bear</summary>
+    <div class="mt-4">
+      <img src="images/zoologist-pictures/Asiatic%20Black%20Bear.png" alt="Asiatic Black Bear" class="w-full max-w-sm rounded-lg mb-4" />
+      <p>This bear lives in steep mountain areas and mixed forests. Weighing up to 440 pounds, they migrate depending on the season — staying in high mountain areas during summer and moving to lower elevations in winter.</p>
+    </div>
+  </details>
+
+  <!-- Animal 3 -->
+  <details class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4">
+    <summary class="text-xl font-semibold">Sika Deer</summary>
+    <div class="mt-4">
+      <img src="images/zoologist-pictures/Sika%20Deer.png" alt="Sika Deer" class="w-full max-w-sm rounded-lg mb-4" />
+      <p>Sika Deer can live up to 25 years. Unlike most deer, they keep their spots into adulthood. Males mark territory using their hooves and antlers, and their unique appearance makes them stand out among Taiwan’s wildlife.</p>
+    </div>
+  </details>
+
+  <!-- Animal 4 -->
+  <details class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4">
+    <summary class="text-xl font-semibold">Oriental Small-Clawed Otter</summary>
+    <div class="mt-4">
+      <img src="images/zoologist-pictures/Oriental%20Small-Clawed%20Otter.png" alt="Oriental Small-Clawed Otter" class="w-full max-w-sm rounded-lg mb-4" />
+      <p>This playful otter can live 11–16 years and grow up to 61 cm. It has brown fur and lives in South Asia. They travel in groups of 12–20, called a raft or a pod, and are known for their strong family bonds.</p>
+    </div>
+  </details>
+
+  <!-- Animal 5 -->
+  <details class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4">
+    <summary class="text-xl font-semibold">Scaly-Breasted Munia</summary>
+    <div class="mt-4">
+      <img src="images/zoologist-pictures/Scaly-Breasted%20Munia.png" alt="Scaly-Breasted Munia" class="w-full max-w-sm rounded-lg mb-4" />
+      <p>This small bird lives 6–8 years and is often seen in flocks of up to 100. Its chest has a scale-like feather pattern, and it is commonly found throughout Taiwan in grassy and open areas.</p>
+    </div>
+  </details>
+
+  <!-- Animal 6 -->
+  <details class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4">
+    <summary class="text-xl font-semibold">Chinese Pangolin</summary>
+    <div class="mt-4">
+      <img src="images/zoologist-pictures/Chinese%20Pangolin.png" alt="Chinese Pangolin" class="w-full max-w-sm rounded-lg mb-4" />
+      <p>The Chinese Pangolin is critically endangered, with its population dropping 80% in just over two decades. It can live up to 20 years, and its young are called "pangopups." These mammals are covered in protective scales and play a vital role in insect control.</p>
+    </div>
+  </details>
+
+  <!-- Animal 7 -->
+  <details class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4">
+    <summary class="text-xl font-semibold">Yellow-Throated Marten</summary>
+    <div class="mt-4">
+      <img src="images/zoologist-pictures/Yellow-Throated%20Marten.png" alt="Yellow-Throated Marten" class="w-full max-w-sm rounded-lg mb-4" />
+      <p>These martens live around 16 years and often hunt in pairs. They are bold and curious animals, unafraid of humans or dogs, and are known to be very trainable. Their golden-yellow throat fur gives them their name.</p>
+    </div>
+  </details>
+
+  <!-- Animal 8 -->
+  <details class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4">
+    <summary class="text-xl font-semibold">Formosan Rock Macaque</summary>
+    <div class="mt-4">
+      <img src="images/zoologist-pictures/Formosan%20Rock%20Macaque.png" alt="Formosan Rock Macaque" class="w-full max-w-sm rounded-lg mb-4" />
+      <p>The only monkey native to Taiwan, the Formosan Rock Macaque has cheek pouches to store food. It can live up to 30 years and is often hunted for food or due to crop damage, despite being protected by law.</p>
+    </div>
+  </details>
+
+  <!-- Animal 9 -->
+  <details class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4">
+    <summary class="text-xl font-semibold">Rana Longicrus</summary>
+    <div class="mt-4">
+      <img src="images/zoologist-pictures/Rana%20Longicrus.png" alt="Rana Longicrus" class="w-full max-w-sm rounded-lg mb-4" />
+      <p>This small frog is only found in Taiwan. Females are larger than males and can lay 600 to 2,000 eggs at a time. They are important indicators of clean freshwater environments in mountain regions.</p>
+    </div>
+  </details>
+
+  <!-- Animal 10 -->
+  <details class="bg-white dark:bg-gray-800 shadow-md rounded-lg p-4">
+    <summary class="text-xl font-semibold">Short-Legged Japalure</summary>
+    <div class="mt-4">
+      <img src="images/zoologist-pictures/Short-Legged%20Japalure.png" alt="Short-Legged Japalure" class="w-full max-w-sm rounded-lg mb-4" />
+      <p>This lizard species is unique to Taiwan. Males are black with yellow spots and stripes, while females are green. Some can grow up to 25 cm in length. They’re usually found in forested areas and rocky terrain.</p>
+    </div>
+  </details>
+
+</main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white text-center py-6">
+    <p>&copy; 2025 Taiwan Research Project. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    // Blossom
+    const sound = new Audio("mail-sent.mp3");
+    sound.volume = 0.3;
+
+    function createLeaf() {
+      const leaf = document.createElement("div");
+      leaf.className = "leaf";
+      leaf.textContent = "🌸";
+      leaf.style.left = Math.random() * 100 + "vw";
+      leaf.style.animationDuration = (Math.random() * 10 + 5) + "s";
+      leaf.onclick = () => sound.cloneNode().play();
+      document.body.appendChild(leaf);
+      setTimeout(() => leaf.remove(), 15000);
+    }
+    setInterval(createLeaf, 700);
+
+    // Scroll fade
+    const faders = document.querySelectorAll('.fade-in-section');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    faders.forEach(f => observer.observe(f));
+
+    // Init
+    setTheme(localStorage.getItem("theme") || "auto");
+  </script>
+</body>
+</html>
