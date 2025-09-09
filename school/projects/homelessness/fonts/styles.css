@@ -1,0 +1,37 @@
+@font-face {
+    font-family: "Helvetica Now";
+    src: url("helveticanowtext-bold-demo.ttf") format("truetype");
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Helvetica Now';
+    src: url('fonts/helveticanowtext-bolditalic-demo.ttf') format('truetype');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Helvetica Now';
+    src: url('fonts/helveticanowtext-black-demo.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Helvetica Now';
+    src: url('fonts/helveticanowtext-blackitalic-demo.ttf') format('truetype');
+    font-weight: 900;
+    font-style: italic;
+}
+
+/* Apply the font */
+body {
+    font-family: 'Helvetica Now', sans-serif;
+}
+
+h1, h2 {
+    font-family: 'Helvetica Now', sans-serif;
+    font-weight: bold;
+}
