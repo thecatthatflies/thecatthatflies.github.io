@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mitigation | TsunamiShield</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Inter', 'DM Sans', sans-serif;
+      color: #1e293b;
+      display: flex;
+      flex-direction: column;
+      animation: fadeIn 1s ease;
+    }
+    body {
+      background: linear-gradient(to bottom, #f0f4f8, #dbeafe);
+      background-attachment: fixed;
+      background-size: cover;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    header {
+      background: linear-gradient(to right, #0f172a, #1d4ed8);
+      color: white;
+      padding: 60px 20px 100px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0,0,0,0.15);
+      z-index: 10;
+    }
+    header .logo {
+      font-size: 36px;
+      margin-bottom: 8px;
+      text-decoration: none;
+      color: white;
+      transition: color 0.3s;
+      cursor: pointer;
+      font-weight: 700;
+      display: inline-block;
+    }
+    header .logo:hover {
+      color: #93c5fd;
+    }
+    header p {
+      font-size: 18px;
+      opacity: 0.9;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 80px;
+      background: url('image.png') no-repeat center top;
+      background-size: contain;
+      pointer-events: none;
+    }
+    nav {
+      background: white;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      padding: 15px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    nav a {
+      color: #1e3a8a;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: 6px;
+      transition: background 0.3s, color 0.3s, transform 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      position: relative;
+    }
+    nav a[title]:hover::after {
+      content: attr(title);
+      position: absolute;
+      background: #1d4ed8;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-size: 14px;
+      white-space: nowrap;
+      left: 50%;
+      transform: translate(-50%, -120%);
+      z-index: 1001;
+      pointer-events: none;
+    }
+    nav a:hover {
+      background: #e0e7ff;
+      color: #1d4ed8;
+      transform: translateY(-2px);
+    }
+    main {
+      flex: 1;
+      padding: 60px 20px;
+      max-width: 960px;
+      margin: auto;
+      background: rgba(255, 255, 255, 0.7);
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+    h2 {
+      color: #1e40af;
+      font-size: 32px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    h3 {
+      color: #0f172a;
+      font-size: 22px;
+      margin-top: 40px;
+      margin-bottom: 10px;
+    }
+    p, ul {
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      margin: 20px 0;
+      background: #fff;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    th, td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+    }
+    th {
+      background: #1e3a8a;
+      color: white;
+      font-weight: 600;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    .back-to-top {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #1d4ed8;
+      color: #fff;
+      border: none;
+      padding: 12px 16px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: background 0.3s, transform 0.2s;
+      z-index: 1000;
+    }
+    .back-to-top:hover {
+      background: #0f172a;
+      transform: translateY(-2px);
+    }
+    footer {
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      padding: 30px;
+      font-size: 14px;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a class="logo" href="index.html">TsunamiShield</a>
+    <p>Helping Our Communities Stay Safe & Prepared</p>
+  </header>
+  <nav>
+    <a href="prediction.html" title="Our approach to forecasting tsunamis">🔮 Prediction</a>
+    <a href="warning.html" title="How we alert communities of impending dangers">⚠️ Warning</a>
+    <a href="mitigation.html" title="Strategies to reduce tsunami impact">🛑 Mitigation</a>
+  </nav>
+  <main>
+    <h2>Mitigation</h2>
+
+    <h3>📘 Effective Strategies</h3>
+    <p>We believe that with thoughtful preparation, communities can reduce the damage caused by tsunamis. FEMA recommends:</p>
+    <ul>
+      <li>Constructing tsunami-resistant buildings and strengthening coastal building codes.</li>
+      <li>Designing clear and accessible evacuation route maps.</li>
+      <li>Planting natural barriers like mangroves and restoring dunes to absorb wave energy.</li>
+    </ul>
+
+    <h3>📘 Community Involvement</h3>
+    <p>Working together makes a huge difference. When governments, organizations, and individuals partner up, everyone is safer. We support:</p>
+    <ul>
+      <li>Grant programs to fund local education and awareness campaigns.</li>
+      <li>Encouraging partnerships between public agencies and private businesses for monitoring systems.</li>
+      <li>Running local drills, town hall discussions, and emergency workshops.</li>
+    </ul>
+
+    <h3>📘 Personal Action Plan (Mitigation)</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Project</th>
+          <th>Description</th>
+          <th>Budget</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Coastal Barriers</td>
+          <td>Mangrove reforestation and seawall construction</td>
+          <td>$800,000</td>
+        </tr>
+        <tr>
+          <td>Community Training</td>
+          <td>Workshops and simulation drills</td>
+          <td>$150,000</td>
+        </tr>
+        <tr>
+          <td>Evacuation Plans</td>
+          <td>Route design, signage installation</td>
+          <td>$200,000</td>
+        </tr>
+        <tr>
+  <td>Total</td>
+  <td></td>
+  <td>$1.15M</td>
+</tr>
+      </tbody>
+    </table>
+
+    <button class="back-to-top" id="backToTopBtn">⬆ Top</button>
+  </main>
+  <footer>
+    &copy; 2025 TsunamiShield Project | FEMA
+  </footer>
+  <script>
+    const backToTopBtn = document.getElementById('backToTopBtn');
+    window.addEventListener('scroll', () => {
+      backToTopBtn.style.display = window.scrollY > 200 ? 'flex' : 'none';
+    });
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+</body>
+</html>
