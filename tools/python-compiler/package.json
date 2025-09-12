@@ -1,0 +1,11 @@
+{
+  "name": "python-ide-studio",
+  "version": "2.0.0",
+  "description": "Advanced Python IDE Studio with Professional Features",
+  "scripts": {
+    "dev": "http-server -p 3000 -c-1 --cors -a localhost"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}

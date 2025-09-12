@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python IDE Studio - Professional Development Environment</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div class="splash-screen" id="splashScreen">
+    <div class="splash-content">
+      <div class="splash-logo">
+        <div class="python-icon">🐍</div>
+        <h1>Python IDE Studio</h1>
+        <p>Professional Development Environment</p>
+      </div>
+      <div class="splash-progress">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p class="loading-text" id="loadingText">Initializing Python environment...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main IDE Interface -->
+  <div class="ide-container" id="ideContainer" style="display: none;">
+    <!-- Top Menu Bar -->
+    <div class="menu-bar">
+      <div class="menu-section">
+        <div class="logo-mini">
+          <span class="logo-icon">🐍</span>
+          <span class="logo-text">Python IDE Studio</span>
+        </div>
+        <div class="menu-items">
+          <div class="menu-item" data-action="new-project">
+            <i class="fas fa-plus"></i> New Project
+          </div>
+          <div class="menu-item" data-action="open-tutorial">
+            <i class="fas fa-graduation-cap"></i> Tutorials
+          </div>
+          <div class="menu-item" data-action="templates">
+            <i class="fas fa-code"></i> Templates
+          </div>
+          <div class="menu-item" data-action="packages">
+            <i class="fas fa-cube"></i> Packages
+          </div>
+        </div>
+      </div>
+      <div class="menu-actions">
+        <button class="action-btn" id="runBtn">
+          <i class="fas fa-play"></i> Run
+        </button>
+        <button class="action-btn secondary" id="debugBtn">
+          <i class="fas fa-bug"></i> Debug
+        </button>
+        <button class="action-btn" id="formatBtn">
+          <i class="fas fa-magic"></i> Format
+        </button>
+        <div class="theme-selector">
+          <select id="themeSelect">
+            <option value="vs-dark">Dark</option>
+            <option value="vs">Light</option>
+            <option value="hc-black">High Contrast</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+      <!-- Sidebar -->
+      <div class="sidebar" id="sidebar">
+        <div class="sidebar-tabs">
+          <div class="sidebar-tab active" data-tab="files">
+            <i class="fas fa-folder"></i>
+            <span>Files</span>
+          </div>
+          <div class="sidebar-tab" data-tab="packages">
+            <i class="fas fa-cube"></i>
+            <span>Packages</span>
+          </div>
+          <div class="sidebar-tab" data-tab="git">
+            <i class="fas fa-code-branch"></i>
+            <span>Git</span>
+          </div>
+          <div class="sidebar-tab" data-tab="snippets">
+            <i class="fas fa-code"></i>
+            <span>Snippets</span>
+          </div>
+        </div>
+
+        <!-- File Explorer -->
+        <div class="sidebar-content" data-content="files">
+          <div class="sidebar-header">
+            <h3>Project Explorer</h3>
+            <div class="sidebar-actions">
+              <button class="icon-btn" data-action="new-file" title="New File">
+                <i class="fas fa-file-plus"></i>
+              </button>
+              <button class="icon-btn" data-action="new-folder" title="New Folder">
+                <i class="fas fa-folder-plus"></i>
+              </button>
+              <button class="icon-btn" data-action="upload-file" title="Upload File">
+                <i class="fas fa-upload"></i>
+              </button>
+            </div>
+          </div>
+          <div class="file-tree" id="fileTree">
+            <!-- Dynamic file tree will be populated here -->
+          </div>
+        </div>
+
+        <!-- Package Manager -->
+        <div class="sidebar-content" data-content="packages" style="display: none;">
+          <div class="sidebar-header">
+            <h3>Package Manager</h3>
+            <div class="package-search">
+              <input type="text" id="packageSearch" placeholder="Search packages...">
+              <button id="searchPackages"><i class="fas fa-search"></i></button>
+            </div>
+          </div>
+          <div class="package-categories">
+            <div class="package-category">
+              <h4>Installed Packages</h4>
+              <div class="installed-packages" id="installedPackages"></div>
+            </div>
+            <div class="package-category">
+              <h4>Popular Packages</h4>
+              <div class="popular-packages" id="popularPackages"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Git Panel -->
+        <div class="sidebar-content" data-content="git" style="display: none;">
+          <div class="sidebar-header">
+            <h3>Version Control</h3>
+            <button class="icon-btn" data-action="commit" title="Commit Changes">
+              <i class="fas fa-check"></i>
+            </button>
+          </div>
+          <div class="git-status" id="gitStatus">
+            <div class="git-section">
+              <h4>Changes</h4>
+              <div class="changed-files" id="changedFiles"></div>
+            </div>
+            <div class="git-section">
+              <h4>Commit History</h4>
+              <div class="commit-history" id="commitHistory"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Code Snippets -->
+        <div class="sidebar-content" data-content="snippets" style="display: none;">
+          <div class="sidebar-header">
+            <h3>Code Snippets</h3>
+            <button class="icon-btn" data-action="new-snippet" title="New Snippet">
+              <i class="fas fa-plus"></i>
+            </button>
+          </div>
+          <div class="snippets-list" id="snippetsList"></div>
+        </div>
+      </div>
+
+      <!-- Editor Area -->
+      <div class="editor-area">
+        <!-- Tab Bar -->
+        <div class="tab-bar" id="tabBar">
+          <div class="tab-controls">
+            <button class="tab-control" data-action="split-editor">
+              <i class="fas fa-columns"></i>
+            </button>
+            <button class="tab-control" data-action="close-all">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Editor Container -->
+        <div class="editor-container" id="editorContainer">
+          <div class="welcome-screen" id="welcomeScreen">
+            <div class="welcome-content">
+              <div class="welcome-logo">
+                <div class="python-icon">🐍</div>
+                <h2>Welcome to Python IDE Studio</h2>
+                <p>Professional Python development environment in your browser</p>
+              </div>
+              
+              <div class="quick-actions">
+                <div class="action-card" data-action="new-project">
+                  <i class="fas fa-rocket"></i>
+                  <h3>Start New Project</h3>
+                  <p>Create a new Python project with templates</p>
+                </div>
+                
+                <div class="action-card" data-action="open-tutorial">
+                  <i class="fas fa-graduation-cap"></i>
+                  <h3>Interactive Tutorials</h3>
+                  <p>Learn Python with guided tutorials</p>
+                </div>
+                
+                <div class="action-card" data-action="upload-project">
+                  <i class="fas fa-upload"></i>
+                  <h3>Upload Project</h3>
+                  <p>Import existing Python projects</p>
+                </div>
+
+                <div class="action-card" data-action="ai-assistant">
+                  <i class="fas fa-robot"></i>
+                  <h3>AI Code Assistant</h3>
+                  <p>Get help with your code</p>
+                </div>
+              </div>
+
+              <div class="recent-projects">
+                <h3>Recent Projects</h3>
+                <div class="recent-list" id="recentList">
+                  <div class="recent-item">
+                    <i class="fas fa-python"></i>
+                    <div class="recent-info">
+                      <span class="recent-name">Flask Web App</span>
+                      <span class="recent-path">~/Projects/flask-app</span>
+                    </div>
+                    <span class="recent-date">2 hours ago</span>
+                  </div>
+                  <div class="recent-item">
+                    <i class="fas fa-chart-line"></i>
+                    <div class="recent-info">
+                      <span class="recent-name">Data Analysis</span>
+                      <span class="recent-path">~/Projects/data-viz</span>
+                    </div>
+                    <span class="recent-date">1 day ago</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Monaco Editor will be injected here -->
+        </div>
+      </div>
+
+      <!-- Right Panel -->
+      <div class="right-panel" id="rightPanel">
+        <div class="panel-tabs">
+          <div class="panel-tab active" data-tab="output">
+            <i class="fas fa-terminal"></i>
+            <span>Output</span>
+          </div>
+          <div class="panel-tab" data-tab="console">
+            <i class="fas fa-code"></i>
+            <span>Console</span>
+          </div>
+          <div class="panel-tab" data-tab="debugger">
+            <i class="fas fa-bug"></i>
+            <span>Debugger</span>
+          </div>
+          <div class="panel-tab" data-tab="plots">
+            <i class="fas fa-chart-bar"></i>
+            <span>Plots</span>
+          </div>
+          <div class="panel-tab" data-tab="profiler">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Profiler</span>
+          </div>
+        </div>
+
+        <!-- Output Panel -->
+        <div class="panel-content" data-content="output">
+          <div class="panel-header">
+            <h3>Output</h3>
+            <div class="panel-actions">
+              <button class="icon-btn" data-action="clear-output">
+                <i class="fas fa-trash"></i>
+              </button>
+              <button class="icon-btn" data-action="download-output">
+                <i class="fas fa-download"></i>
+              </button>
+            </div>
+          </div>
+          <div class="output-console" id="outputConsole"></div>
+        </div>
+
+        <!-- Interactive Console -->
+        <div class="panel-content" data-content="console" style="display: none;">
+          <div class="panel-header">
+            <h3>Interactive Console</h3>
+            <div class="panel-actions">
+              <button class="icon-btn" data-action="clear-console">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+          <div class="interactive-console" id="interactiveConsole">
+            <div class="console-history" id="consoleHistory"></div>
+            <div class="console-input">
+              <span class="console-prompt">>>> </span>
+              <input type="text" id="consoleInput" placeholder="Type Python code here...">
+            </div>
+          </div>
+        </div>
+
+        <!-- Debugger Panel -->
+        <div class="panel-content" data-content="debugger" style="display: none;">
+          <div class="panel-header">
+            <h3>Debugger</h3>
+            <div class="debug-controls">
+              <button class="icon-btn" data-action="step-over"><i class="fas fa-step-forward"></i></button>
+              <button class="icon-btn" data-action="step-into"><i class="fas fa-arrow-down"></i></button>
+              <button class="icon-btn" data-action="continue"><i class="fas fa-play"></i></button>
+            </div>
+          </div>
+          <div class="debugger-content">
+            <div class="debug-section">
+              <h4>Variables</h4>
+              <div class="variables-list" id="variablesList"></div>
+            </div>
+            <div class="debug-section">
+              <h4>Call Stack</h4>
+              <div class="call-stack" id="callStack"></div>
+            </div>
+            <div class="debug-section">
+              <h4>Breakpoints</h4>
+              <div class="breakpoints-list" id="breakpointsList"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plots Panel -->
+        <div class="panel-content" data-content="plots" style="display: none;">
+          <div class="panel-header">
+            <h3>Data Visualization</h3>
+            <div class="panel-actions">
+              <button class="icon-btn" data-action="save-plot">
+                <i class="fas fa-save"></i>
+              </button>
+            </div>
+          </div>
+          <div class="plots-container" id="plotsContainer">
+            <div class="plot-placeholder">
+              <i class="fas fa-chart-line"></i>
+              <p>Matplotlib plots will appear here</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Performance Profiler -->
+        <div class="panel-content" data-content="profiler" style="display: none;">
+          <div class="panel-header">
+            <h3>Performance Profiler</h3>
+            <button class="icon-btn" data-action="start-profiling">
+              <i class="fas fa-play"></i>
+            </button>
+          </div>
+          <div class="profiler-content" id="profilerContent">
+            <div class="profiler-stats">
+              <div class="stat-item">
+                <span class="stat-label">Execution Time:</span>
+                <span class="stat-value" id="executionTime">-</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Memory Usage:</span>
+                <span class="stat-value" id="memoryUsage">-</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-label">Function Calls:</span>
+                <span class="stat-value" id="functionCalls">-</span>
+              </div>
+            </div>
+            <div class="profiler-chart" id="profilerChart"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <div class="status-left">
+        <span class="status-item">
+          <i class="fas fa-circle status-indicator" id="statusIndicator"></i>
+          <span id="statusText">Ready</span>
+        </span>
+        <span class="status-item" id="cursorPosition">Ln 1, Col 1</span>
+        <span class="status-item" id="fileEncoding">UTF-8</span>
+      </div>
+      <div class="status-right">
+        <span class="status-item" id="pythonVersion">Python 3.11.0</span>
+        <span class="status-item" id="activeProject">No Project</span>
+        <button class="status-item clickable" id="togglePanels">
+          <i class="fas fa-layout"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tutorial Modal -->
+  <div class="modal" id="tutorialModal" style="display: none;">
+    <div class="modal-content large">
+      <div class="modal-header">
+        <h2><i class="fas fa-graduation-cap"></i> Interactive Python Tutorials</h2>
+        <button class="modal-close" id="closeTutorial">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="tutorial-sidebar">
+          <div class="tutorial-categories" id="tutorialCategories"></div>
+        </div>
+        <div class="tutorial-content">
+          <div class="tutorial-lesson" id="tutorialLesson"></div>
+          <div class="tutorial-actions">
+            <button class="btn-secondary" id="prevLesson">← Previous</button>
+            <button class="btn-primary" id="nextLesson">Next →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Template Modal -->
+  <div class="modal" id="templateModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-code"></i> Project Templates</h2>
+        <button class="modal-close" id="closeTemplate">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="template-grid" id="templateGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Assistant Modal -->
+  <div class="modal" id="aiModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2><i class="fas fa-robot"></i> AI Code Assistant</h2>
+        <button class="modal-close" id="closeAI">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="ai-chat" id="aiChat">
+          <div class="ai-messages" id="aiMessages"></div>
+          <div class="ai-input">
+            <input type="text" id="aiInput" placeholder="Ask me anything about Python...">
+            <button id="sendAI"><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden File Input -->
+  <input type="file" id="fileInput" multiple style="display: none;">
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.44.0/min/vs/loader.js"></script>
+  <script src="https://cdn.jsdelivr.net/pyodide/v0.24.1/full/pyodide.js"></script>
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="ide-core.js"></script>
+  <script src="file-manager.js"></script>
+  <script src="tutorial-system.js"></script>
+  <script src="ai-assistant.js"></script>
+  <script src="package-manager.js"></script>
+  <script src="git-simulator.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
