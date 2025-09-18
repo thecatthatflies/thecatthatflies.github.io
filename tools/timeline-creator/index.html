@@ -8,180 +8,160 @@
   <style>
     :root {
       --bg: #0b0f1a;
-      --surface: #121829;
+      --surface: rgba(255,255,255,0.08);
       --text: #e8ecf5;
       --accent: #7c5cff;
       --font-family: "Inter", sans-serif;
     }
-    * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: var(--font-family);
       background: var(--bg);
       color: var(--text);
-    }
-    header { padding: .75rem 1rem; background: var(--surface); }
-    .hidden { display: none; }
-    .startup {
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-      height: 100vh; text-align: center;
-    }
-    .startup button {
-      margin: .5rem; padding: .75rem 1.5rem; border: none; border-radius: .5rem;
-      background: var(--accent); color: #fff; cursor: pointer; font-size: 1rem;
+      font-family: var(--font-family);
+      transition: background .3s, color .3s;
     }
     .menu-bar {
-      display: flex; background: var(--surface); padding: .25rem .5rem; font-size: .9rem;
+      display: flex;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      padding: .4rem .8rem;
+      font-size: .9rem;
+      position: sticky; top: 0;
+      z-index: 1000;
     }
     .menu { margin-right: 1rem; position: relative; cursor: pointer; }
     .dropdown {
-      display: none; position: absolute; top: 1.5rem; left: 0; min-width: 150px;
-      background: var(--surface); border: 1px solid #333; z-index: 20;
+      display: none; position: absolute; top: 1.5rem; left: 0;
+      min-width: 150px; background: var(--surface);
+      border-radius: .4rem; overflow: hidden; backdrop-filter: blur(12px);
     }
-    .dropdown div { padding: .4rem .6rem; cursor: pointer; }
-    .dropdown div:hover { background: #333; }
+    .dropdown div {
+      padding: .5rem .8rem; cursor: pointer;
+    }
+    .dropdown div:hover { background: rgba(255,255,255,0.15); }
     .menu:hover .dropdown { display: block; }
-    .controls { padding: 1rem; border-bottom: 1px solid #333; }
+
+    .controls { padding: 1rem; text-align: center; }
     .controls input, .controls select, .controls button {
-      margin: .3rem; padding: .4rem .6rem;
+      margin: .3rem; padding: .4rem .6rem; border-radius: .4rem;
+      border: none; outline: none;
     }
-    #timelineCanvas, #timelineCanvasC {
-      padding: 1rem; min-height: 80vh;
+
+    #timelineCanvas {
+      display: flex; align-items: center;
+      overflow-x: auto; overflow-y: hidden;
+      padding: 2rem; gap: 3rem;
+      min-height: 70vh;
+      border-top: 2px solid var(--accent);
+      scroll-behavior: smooth;
     }
+
     .event {
-      background: var(--surface); border-left: 4px solid var(--accent);
-      margin: .75rem 0; padding: .5rem 1rem; border-radius: .4rem;
+      flex: 0 0 auto;
+      width: 250px;
+      background: var(--surface);
+      backdrop-filter: blur(12px);
+      border-radius: 1rem;
+      padding: 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,.4);
+      border-top: 4px solid var(--accent);
+      transition: transform .2s;
     }
-    .event h3 { margin: 0 0 .2rem 0; }
-    .era {
-      background: rgba(124,92,255,0.15);
-      margin: 1rem 0; padding: .5rem; border-left: 4px solid var(--accent);
-      border-radius: .4rem;
-    }
-    .tag { display: inline-block; margin: .2rem; padding: .2rem .5rem; background: var(--accent); color: #fff; border-radius: .3rem; font-size: .8rem; }
+    .event:hover { transform: translateY(-5px); cursor: grab; }
+    .event h3 { margin: 0 0 .3rem 0; }
+    .event small { opacity: 0.7; }
+    .event img { max-width: 100%; border-radius: .5rem; margin-top: .5rem; }
+    .drag-over { border: 2px dashed var(--accent); }
+    .tag { display: inline-block; margin: .2rem; padding: .2rem .6rem; background: var(--accent); border-radius: .5rem; font-size: .75rem; color: white; }
   </style>
 </head>
 <body>
 
-<!-- Startup -->
-<div id="startup" class="startup">
-  <h1>Timeline Creator</h1>
-  <p>Select your mode:</p>
-  <button onclick="chooseMode('easy')">Easy Mode</button>
-  <button onclick="chooseMode('complex')">Complex Mode</button>
-  <button onclick="resumePrevious()">Load Previous</button>
-</div>
-
-<!-- Easy Mode -->
-<div id="easyMode" class="hidden">
-  <header>Easy Mode</header>
-  <div class="controls">
-    <input id="eventTitle" placeholder="Event title">
-    <input id="eventDate" type="date">
-    <button onclick="addEvent()">Add Event</button>
-    <select id="fontPicker" onchange="changeFont(this.value)">
-      <option>Inter</option><option>Roboto</option><option>Lora</option><option>Montserrat</option>
-    </select>
-    <input type="color" onchange="changeColor(this.value)">
-    <button onclick="exportPNG()">Export PNG</button>
-  </div>
-  <div id="timelineCanvas"></div>
-</div>
-
-<!-- Complex Mode -->
-<div id="complexMode" class="hidden">
-  <div class="menu-bar">
-    <div class="menu">File
-      <div class="dropdown">
-        <div onclick="newTimeline()">New</div>
-        <div onclick="importJSON()">Open JSON</div>
-        <div onclick="importCSV()">Open CSV</div>
-        <div onclick="importMD()">Open Markdown</div>
-        <div onclick="saveTimeline()">Save JSON</div>
-        <div onclick="exportPNG()">Export PNG</div>
-        <div onclick="exportSVG()">Export SVG</div>
-        <div onclick="exportPDF()">Export PDF</div>
-        <div onclick="exportZIP()">Export ZIP</div>
-      </div>
-    </div>
-    <div class="menu">Edit
-      <div class="dropdown">
-        <div onclick="undo()">Undo</div>
-        <div onclick="redo()">Redo</div>
-        <div onclick="deleteLast()">Delete Last</div>
-      </div>
-    </div>
-    <div class="menu">View
-      <div class="dropdown">
-        <div onclick="switchMode('easy')">Switch to Easy</div>
-        <div onclick="toggleFullscreen()">Fullscreen</div>
-        <div onclick="presentation()">Presentation</div>
-      </div>
-    </div>
-    <div class="menu">Insert
-      <div class="dropdown">
-        <div onclick="promptEvent()">Event</div>
-        <div onclick="promptEra()">Era</div>
-        <div onclick="promptTag()">Tag</div>
-      </div>
-    </div>
-    <div class="menu">Format
-      <div class="dropdown">
-        <div>
-          <select onchange="changeFont(this.value)">
-            <option>Inter</option><option>Roboto</option><option>Lora</option><option>Montserrat</option>
-          </select>
-        </div>
-        <div><input type="color" onchange="changeColor(this.value)"></div>
-      </div>
-    </div>
-    <div class="menu">Help
-      <div class="dropdown">
-        <div onclick="alert('Keyboard shortcuts:\\nN = new event\\nCtrl+S = save\\nArrows = navigate presentation')">Shortcuts</div>
-        <div onclick="alert('Timeline Creator v1.0')">About</div>
-      </div>
+<div class="menu-bar">
+  <div class="menu">File
+    <div class="dropdown">
+      <div onclick="newTimeline()">New</div>
+      <div onclick="importJSON()">Open JSON</div>
+      <div onclick="saveTimeline()">Save JSON</div>
+      <div onclick="exportPNG()">Export PNG</div>
+      <div onclick="exportPDF()">Export PDF</div>
+      <div onclick="exportSVG()">Export SVG</div>
     </div>
   </div>
-  <header>Complex Mode</header>
-  <div class="controls">
-    <input id="eventTitleC" placeholder="Event title">
-    <input id="eventDateC" type="date">
-    <button onclick="addEvent(true)">Add Event</button>
+  <div class="menu">Edit
+    <div class="dropdown">
+      <div onclick="undo()">Undo</div>
+      <div onclick="redo()">Redo</div>
+      <div onclick="deleteLast()">Delete Last</div>
+    </div>
   </div>
-  <div id="timelineCanvasC"></div>
+  <div class="menu">View
+    <div class="dropdown">
+      <div onclick="toggleTheme()">Toggle Dark/Light</div>
+      <div onclick="toggleFullscreen()">Fullscreen</div>
+    </div>
+  </div>
+  <div class="menu">Insert
+    <div class="dropdown">
+      <div onclick="promptEvent()">Event</div>
+    </div>
+  </div>
+  <div class="menu">Format
+    <div class="dropdown">
+      <div>
+        <select onchange="changeFont(this.value)">
+          <option>Inter</option><option>Roboto</option><option>Lora</option><option>Montserrat</option>
+        </select>
+      </div>
+      <div><input type="color" onchange="changeColor(this.value)"></div>
+    </div>
+  </div>
+  <div class="menu">Help
+    <div class="dropdown">
+      <div onclick="alert('Keyboard shortcuts:\\nN = new event\\nCtrl+S = save\\n→/← = scroll')">Shortcuts</div>
+      <div onclick="alert('Timeline Creator v3.0 with Drag-and-Drop')">About</div>
+    </div>
+  </div>
 </div>
 
-<!-- Libraries -->
+<div class="controls">
+  <input id="eventTitle" placeholder="Event title">
+  <input id="eventDate" type="date">
+  <input id="eventImg" type="url" placeholder="Image URL (optional)">
+  <button onclick="addEvent()">Add Event</button>
+</div>
+
+<div id="timelineCanvas"></div>
+
+<!-- Libs -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script>
-let mode=null;let events=[];let eras=[];let tags=[];let history=[];let redoStack=[];
-function chooseMode(m){mode=m;localStorage.setItem("timelineMode",m);document.getElementById("startup").classList.add("hidden");document.getElementById("easyMode").classList.add("hidden");document.getElementById("complexMode").classList.add("hidden");if(m==="easy")document.getElementById("easyMode").classList.remove("hidden");if(m==="complex")document.getElementById("complexMode").classList.remove("hidden");renderEvents(m==="complex");}
-function resumePrevious(){let m=localStorage.getItem("timelineMode");if(m)chooseMode(m);else alert("No previous mode");}
-function addEvent(complex=false){const title=document.getElementById(complex?"eventTitleC":"eventTitle").value;const date=document.getElementById(complex?"eventDateC":"eventDate").value;if(!title)return;const ev={title,date};pushHistory();events.push(ev);renderEvents(complex);}
-function renderEvents(complex=false){const canvas=document.getElementById(complex?"timelineCanvasC":"timelineCanvas");canvas.innerHTML="";eras.forEach(e=>{const div=document.createElement("div");div.className="era";div.innerHTML=`<strong>${e.label}</strong> (${e.start}–${e.end})`;canvas.appendChild(div);});events.forEach(e=>{const div=document.createElement("div");div.className="event";div.innerHTML=`<h3>${e.title}</h3><small>${e.date}</small>`;canvas.appendChild(div);});if(tags.length){const tagWrap=document.createElement("div");tags.forEach(t=>{let span=document.createElement("span");span.className="tag";span.textContent=t;tagWrap.appendChild(span);});canvas.appendChild(tagWrap);}}
-function exportPNG(){const canvas=mode==="complex"?document.getElementById("timelineCanvasC"):document.getElementById("timelineCanvas");html2canvas(canvas,{scale:3}).then(c=>{c.toBlob(b=>saveAs(b,"timeline.png"));});}
-function exportSVG(){let content="<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='1000'><style>text{font-family:sans-serif;fill:#000;}</style>";events.forEach((e,i)=>{content+=`<text x='50' y='${50+i*30}'>${e.date} ${e.title}</text>`});content+="</svg>";saveAs(new Blob([content],{type:"image/svg+xml"}),"timeline.svg");}
-async function exportPDF(){const {jsPDF}=window.jspdf;const canvas=document.getElementById("timelineCanvasC");const c=await html2canvas(canvas,{scale:2});const img=c.toDataURL("image/png");const pdf=new jsPDF('p','mm','a4');pdf.addImage(img,'PNG',10,10,190,0);pdf.save("timeline.pdf");}
-function exportZIP(){let zipContent={events,eras,tags};saveAs(new Blob([JSON.stringify(zipContent,null,2)],{type:"application/json"}),"timeline.zip");}
-function changeFont(font){document.getElementById("googleFontLink").href=`https://fonts.googleapis.com/css2?family=${font.replace(" ","+")}:wght@400;600&display=swap`;document.body.style.fontFamily=`"${font}",sans-serif`;}
+let events=[];let history=[];let redoStack=[];
+function addEvent(){const title=document.getElementById("eventTitle").value;const date=document.getElementById("eventDate").value;const img=document.getElementById("eventImg").value;if(!title)return;pushHistory();events.push({title,date,img});renderEvents();}
+function renderEvents(){const c=document.getElementById("timelineCanvas");c.innerHTML="";events.forEach((e,i)=>{let div=document.createElement("div");div.className="event";div.setAttribute("draggable","true");div.dataset.index=i;div.innerHTML=`<h3 contenteditable onblur="updateEvent(${i},this.innerText,'title')">${e.title}</h3><small contenteditable onblur="updateEvent(${i},this.innerText,'date')">${e.date||""}</small>${e.img?`<img src='${e.img}' alt='img'>`:""}<div style='margin-top:.5rem'><button onclick='removeEvent(${i})'>❌</button></div>`;addDnD(div);c.appendChild(div);});saveLocal();}
+function addDnD(el){el.addEventListener("dragstart",e=>{e.dataTransfer.setData("text/plain",el.dataset.index);});el.addEventListener("dragover",e=>{e.preventDefault();el.classList.add("drag-over");});el.addEventListener("dragleave",()=>el.classList.remove("drag-over"));el.addEventListener("drop",e=>{e.preventDefault();el.classList.remove("drag-over");let from=parseInt(e.dataTransfer.getData("text/plain"));let to=parseInt(el.dataset.index);if(from!==to){pushHistory();let moved=events.splice(from,1)[0];events.splice(to,0,moved);renderEvents();}});}
+function updateEvent(i,val,field){events[i][field]=val;saveLocal();}
+function removeEvent(i){pushHistory();events.splice(i,1);renderEvents();}
+function newTimeline(){pushHistory();events=[];renderEvents();}
+function saveTimeline(){saveAs(new Blob([JSON.stringify(events,null,2)],{type:"application/json"}),"timeline.json");}
+function importJSON(){let i=document.createElement("input");i.type="file";i.accept=".json";i.onchange=e=>{let f=e.target.files[0];let r=new FileReader();r.onload=()=>{events=JSON.parse(r.result);renderEvents();};r.readAsText(f);};i.click();}
+function exportPNG(){html2canvas(document.getElementById("timelineCanvas"),{scale:3}).then(c=>{c.toBlob(b=>saveAs(b,"timeline.png"));});}
+async function exportPDF(){const {jsPDF}=window.jspdf;const c=await html2canvas(document.getElementById("timelineCanvas"),{scale:2});const img=c.toDataURL("image/png");const pdf=new jsPDF('l','mm','a4');pdf.addImage(img,'PNG',10,10,270,0);pdf.save("timeline.pdf");}
+function exportSVG(){let content="<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='600'><style>text{font-family:sans-serif;}</style>";events.forEach((e,i)=>{content+=`<text x='50' y='${50+i*30}'>${e.date} ${e.title}</text>`});content+="</svg>";saveAs(new Blob([content],{type:"image/svg+xml"}),"timeline.svg");}
+function pushHistory(){history.push(JSON.stringify(events));redoStack=[];}
+function undo(){if(history.length){redoStack.push(JSON.stringify(events));events=JSON.parse(history.pop());renderEvents();}}
+function redo(){if(redoStack.length){history.push(JSON.stringify(events));events=JSON.parse(redoStack.pop());renderEvents();}}
+function deleteLast(){pushHistory();events.pop();renderEvents();}
+function promptEvent(){let t=prompt("Title?");let d=prompt("Date?");if(t){events.push({title:t,date:d});renderEvents();}}
+function changeFont(f){document.getElementById("googleFontLink").href=`https://fonts.googleapis.com/css2?family=${f.replace(" ","+")}:wght@400;600&display=swap`;document.body.style.fontFamily=`"${f}",sans-serif`;}
 function changeColor(c){document.documentElement.style.setProperty('--accent',c);}
-function switchMode(m){chooseMode(m);}
-function newTimeline(){pushHistory();events=[];eras=[];tags=[];renderEvents(true);}
-function saveTimeline(){saveAs(new Blob([JSON.stringify({events,eras,tags},null,2)],{type:"application/json"}),"timeline.json");}
-function importJSON(){let i=document.createElement("input");i.type="file";i.accept=".json";i.onchange=e=>{let f=e.target.files[0];let r=new FileReader();r.onload=()=>{let data=JSON.parse(r.result);events=data.events||[];eras=data.eras||[];tags=data.tags||[];renderEvents(true);};r.readAsText(f);};i.click();}
-function importCSV(){let i=document.createElement("input");i.type="file";i.accept=".csv";i.onchange=e=>{let f=e.target.files[0];let r=new FileReader();r.onload=()=>{let lines=r.result.split(/\\r?\\n/);lines.forEach(l=>{let [title,date]=l.split(",");if(title&&date)events.push({title,date});});renderEvents(true);};r.readAsText(f);};i.click();}
-function importMD(){let i=document.createElement("input");i.type="file";i.accept=".md";i.onchange=e=>{let f=e.target.files[0];let r=new FileReader();r.onload=()=>{r.result.split(/\\r?\\n/).forEach(l=>{let m=l.match(/(\\d{4}-\\d{2}-\\d{2})\\s+(.*)/);if(m)events.push({date:m[1],title:m[2]});});renderEvents(true);};r.readAsText(f);};i.click();}
-function pushHistory(){history.push(JSON.stringify({events,eras,tags}));redoStack=[];}
-function undo(){if(history.length){redoStack.push(JSON.stringify({events,eras,tags}));let last=history.pop();let s=JSON.parse(last);events=s.events;eras=s.eras;tags=s.tags;renderEvents(true);}}
-function redo(){if(redoStack.length){history.push(JSON.stringify({events,eras,tags}));let nxt=redoStack.pop();let s=JSON.parse(nxt);events=s.events;eras=s.eras;tags=s.tags;renderEvents(true);}}
-function deleteLast(){pushHistory();events.pop();renderEvents(true);}
 function toggleFullscreen(){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen();}
-function promptEvent(){let t=prompt("Title?");let d=prompt("Date (YYYY-MM-DD)?");if(t&&d){pushHistory();events.push({title:t,date:d});renderEvents(true);}}
-function promptEra(){let l=prompt("Era label?");let s=prompt("Start?");let e=prompt("End?");if(l&&s&&e){pushHistory();eras.push({label:l,start:s,end:e});renderEvents(true);}}
-function promptTag(){let t=prompt("Tag?");if(t){pushHistory();tags.push(t);renderEvents(true);}}
-function presentation(){let i=0;if(!events.length)return;const show=()=>{document.getElementById("timelineCanvasC").innerHTML=`<div class='event'><h3>${events[i].title}</h3><small>${events[i].date}</small></div>`};show();document.onkeydown=(e)=>{if(e.key==="ArrowRight"){i=(i+1)%events.length;show();}if(e.key==="ArrowLeft"){i=(i-1+events.length)%events.length;show();}};}
+function toggleTheme(){if(document.body.dataset.theme==="light"){document.body.dataset.theme="dark";document.documentElement.style.setProperty('--bg','#0b0f1a');document.documentElement.style.setProperty('--text','#e8ecf5');}else{document.body.dataset.theme="light";document.documentElement.style.setProperty('--bg','#ffffff');document.documentElement.style.setProperty('--text','#000000');}}
+function saveLocal(){localStorage.setItem("timelineEvents",JSON.stringify(events));}
+function loadLocal(){let d=localStorage.getItem("timelineEvents");if(d){events=JSON.parse(d);renderEvents();}}
+loadLocal();
 </script>
 </body>
 </html>
