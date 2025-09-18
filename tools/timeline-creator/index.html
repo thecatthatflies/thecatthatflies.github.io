@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Timeline Creator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link id="googleFontLink" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+  <style>
+    :root {
+      --bg: #0b0f1a;
+      --surface: #121829;
+      --text: #e8ecf5;
+      --accent: #7c5cff;
+      --font-family: "Inter", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: var(--font-family);
+      background: var(--bg);
+      color: var(--text);
+    }
+    header { padding: .75rem 1rem; background: var(--surface); }
+    .hidden { display: none; }
+    .startup {
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      height: 100vh; text-align: center;
+    }
+    .startup button {
+      margin: .5rem; padding: .75rem 1.5rem; border: none; border-radius: .5rem;
+      background: var(--accent); color: #fff; cursor: pointer; font-size: 1rem;
+    }
+    .menu-bar {
+      display: flex; background: var(--surface); padding: .25rem .5rem; font-size: .9rem;
+    }
+    .menu { margin-right: 1rem; position: relative; cursor: pointer; }
+    .dropdown {
+      display: none; position: absolute; top: 1.5rem; left: 0; min-width: 150px;
+      background: var(--surface); border: 1px solid #333; z-index: 20;
+    }
+    .dropdown div { padding: .4rem .6rem; cursor: pointer; }
+    .dropdown div:hover { background: #333; }
+    .menu:hover .dropdown { display: block; }
+    .controls { padding: 1rem; border-bottom: 1px solid #333; }
+    .controls input, .controls select, .controls button {
+      margin: .3rem; padding: .4rem .6rem;
+    }
+    #timelineCanvas, #timelineCanvasC {
+      padding: 1rem; min-height: 80vh;
+    }
+    .event {
+      background: var(--surface); border-left: 4px solid var(--accent);
+      margin: .75rem 0; padding: .5rem 1rem; border-radius: .4rem;
+    }
+    .event h3 { margin: 0 0 .2rem 0; }
+    .era {
+      background: rgba(124,92,255,0.15);
+      margin: 1rem 0; padding: .5rem; border-left: 4px solid var(--accent);
+      border-radius: .4rem;
+    }
+    .tag { display: inline-block; margin: .2rem; padding: .2rem .5rem; background: var(--accent); color: #fff; border-radius: .3rem; font-size: .8rem; }
+  </style>
+</head>
+<body>
+
+<!-- Startup -->
+<div id="startup" class="startup">
+  <h1>Timeline Creator</h1>
+  <p>Select your mode:</p>
+  <button onclick="chooseMode('easy')">Easy Mode</button>
+  <button onclick="chooseMode('complex')">Complex Mode</button>
+  <button onclick="resumePrevious()">Load Previous</button>
+</div>
+
+<!-- Easy Mode -->
+<div id="easyMode" class="hidden">
+  <header>Easy Mode</header>
+  <div class="controls">
+    <input id="eventTitle" placeholder="Event title">
+    <input id="eventDate" type="date">
+    <button onclick="addEvent()">Add Event</button>
+    <select id="fontPicker" onchange="changeFont(this.value)">
+      <option>Inter</option><option>Roboto</option><option>Lora</option><option>Montserrat</option>
+    </select>
+    <input type="color" onchange="changeColor(this.value)">
+    <button onclick="exportPNG()">Export PNG</button>
+  </div>
+  <div id="timelineCanvas"></div>
+</div>
+
+<!-- Complex Mode -->
+<div id="complexMode" class="hidden">
+  <div class="menu-bar">
+    <div class="menu">File
+      <div class="dropdown">
+        <div onclick="newTimeline()">New</div>
+        <div onclick="importJSON()">Open JSON</div>
+        <div onclick="importCSV()">Open CSV</div>
+        <div onclick="importMD()">Open Markdown</div>
+        <div onclick="saveTimeline()">Save JSON</div>
+        <div onclick="exportPNG()">Export PNG</div>
+        <div onclick="exportSVG()">Export SVG</div>
+        <div onclick="exportPDF()">Export PDF</div>
+        <div onclick="exportZIP()">Export ZIP</div>
+      </div>
+    </div>
+    <div class="menu">Edit
+      <div class="dropdown">
+        <div onclick="undo()">Undo</div>
+        <div onclick="redo()">Redo</div>
+        <div onclick="deleteLast()">Delete Last</div>
+      </div>
+    </div>
+    <div class="menu">View
+      <div class="dropdown">
+        <div onclick="switchMode('easy')">Switch to Easy</div>
+        <div onclick="toggleFullscreen()">Fullscreen</div>
+        <div onclick="presentation()">Presentation</div>
+      </div>
+    </div>
+    <div class="menu">Insert
+      <div class="dropdown">
+        <div onclick="promptEvent()">Event</div>
+        <div onclick="promptEra()">Era</div>
+        <div onclick="promptTag()">Tag</div>
+      </div>
+    </div>
+    <div class="menu">Format
+      <div class="dropdown">
+        <div>
+          <select onchange="changeFont(this.value)">
+            <option>Inter</option><option>Roboto</option><option>Lora</option><option>Montserrat</option>
+          </select>
+        </div>
+        <div><input type="color" onchange="changeColor(this.value)"></div>
+      </div>
+    </div>
+    <div class="menu">Help
+      <div class="dropdown">
+        <div onclick="alert('Keyboard shortcuts:\\nN = new event\\nCtrl+S = save\\nArrows = navigate presentation')">Shortcuts</div>
+        <div onclick="alert('Timeline Creator v1.0')">About</div>
+      </div>
+    </div>
+  </div>
+  <header>Complex Mode</header>
+  <div class="controls">
+    <input id="eventTitleC" placeholder="Event title">
+    <input id="eventDateC" type="date">
+    <button onclick="addEvent(true)">Add Event</button>
+  </div>
+  <div id="timelineCanvasC"></div>
+</div>
+
+<!-- Libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+<script>
+let mode=null;let events=[];let eras=[];let tags=[];let history=[];let redoStack=[];
+function chooseMode(m){mode=m;localStorage.setItem("timelineMode",m);document.getElementById("startup").classList.add("hidden");document.getElementById("easyMode").classList.add("hidden");document.getElementById("complexMode").classList.add("hidden");if(m==="easy")document.getElementById("easyMode").classList.remove("hidden");if(m==="complex")document.getElementById("complexMode").classList.remove("hidden");renderEvents(m==="complex");}
+function resumePrevious(){let m=localStorage.getItem("timelineMode");if(m)chooseMode(m);else alert("No previous mode");}
+function addEvent(complex=false){const title=document.getElementById(complex?"eventTitleC":"eventTitle").value;const date=document.getElementById(complex?"eventDateC":"eventDate").value;if(!title)return;const ev={title,date};pushHistory();events.push(ev);renderEvents(complex);}
+function renderEvents(complex=false){const canvas=document.getElementById(complex?"timelineCanvasC":"timelineCanvas");canvas.innerHTML="";eras.forEach(e=>{const div=document.createElement("div");div.className="era";div.innerHTML=`<strong>${e.label}</strong> (${e.start}–${e.end})`;canvas.appendChild(div);});events.forEach(e=>{const div=document.createElement("div");div.className="event";div.innerHTML=`<h3>${e.title}</h3><small>${e.date}</small>`;canvas.appendChild(div);});if(tags.length){const tagWrap=document.createElement("div");tags.forEach(t=>{let span=document.createElement("span");span.className="tag";span.textContent=t;tagWrap.appendChild(span);});canvas.appendChild(tagWrap);}}
+function exportPNG(){const canvas=mode==="complex"?document.getElementById("timelineCanvasC"):document.getElementById("timelineCanvas");html2canvas(canvas,{scale:3}).then(c=>{c.toBlob(b=>saveAs(b,"timeline.png"));});}
+function exportSVG(){let content="<svg xmlns='http://www.w3.org/2000/svg' width='1000' height='1000'><style>text{font-family:sans-serif;fill:#000;}</style>";events.forEach((e,i)=>{content+=`<text x='50' y='${50+i*30}'>${e.date} ${e.title}</text>`});content+="</svg>";saveAs(new Blob([content],{type:"image/svg+xml"}),"timeline.svg");}
+async function exportPDF(){const {jsPDF}=window.jspdf;const canvas=document.getElementById("timelineCanvasC");const c=await html2canvas(canvas,{scale:2});const img=c.toDataURL("image/png");const pdf=new jsPDF('p','mm','a4');pdf.addImage(img,'PNG',10,10,190,0);pdf.save("timeline.pdf");}
+function exportZIP(){let zipContent={events,eras,tags};saveAs(new Blob([JSON.stringify(zipContent,null,2)],{type:"application/json"}),"timeline.zip");}
+function changeFont(font){document.getElementById("googleFontLink").href=`https://fonts.googleapis.com/css2?family=${font.replace(" ","+")}:wght@400;600&display=swap`;document.body.style.fontFamily=`"${font}",sans-serif`;}
+function changeColor(c){document.documentElement.style.setProperty('--accent',c);}
+function switchMode(m){chooseMode(m);}
+function newTimeline(){pushHistory();events=[];eras=[];tags=[];renderEvents(true);}
+function saveTimeline(){saveAs(new Blob([JSON.stringify({events,eras,tags},null,2)],{type:"application/json"}),"timeline.json");}
+function importJSON(){let i=document.createElement("input");i.type="file";i.accept=".json";i.onchange=e=>{let f=e.target.files[0];let r=new FileReader();r.onload=()=>{let data=JSON.parse(r.result);events=data.events||[];eras=data.eras||[];tags=data.tags||[];renderEvents(true);};r.readAsText(f);};i.click();}
+function importCSV(){let i=document.createElement("input");i.type="file";i.accept=".csv";i.onchange=e=>{let f=e.target.files[0];let r=new FileReader();r.onload=()=>{let lines=r.result.split(/\\r?\\n/);lines.forEach(l=>{let [title,date]=l.split(",");if(title&&date)events.push({title,date});});renderEvents(true);};r.readAsText(f);};i.click();}
+function importMD(){let i=document.createElement("input");i.type="file";i.accept=".md";i.onchange=e=>{let f=e.target.files[0];let r=new FileReader();r.onload=()=>{r.result.split(/\\r?\\n/).forEach(l=>{let m=l.match(/(\\d{4}-\\d{2}-\\d{2})\\s+(.*)/);if(m)events.push({date:m[1],title:m[2]});});renderEvents(true);};r.readAsText(f);};i.click();}
+function pushHistory(){history.push(JSON.stringify({events,eras,tags}));redoStack=[];}
+function undo(){if(history.length){redoStack.push(JSON.stringify({events,eras,tags}));let last=history.pop();let s=JSON.parse(last);events=s.events;eras=s.eras;tags=s.tags;renderEvents(true);}}
+function redo(){if(redoStack.length){history.push(JSON.stringify({events,eras,tags}));let nxt=redoStack.pop();let s=JSON.parse(nxt);events=s.events;eras=s.eras;tags=s.tags;renderEvents(true);}}
+function deleteLast(){pushHistory();events.pop();renderEvents(true);}
+function toggleFullscreen(){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen();}
+function promptEvent(){let t=prompt("Title?");let d=prompt("Date (YYYY-MM-DD)?");if(t&&d){pushHistory();events.push({title:t,date:d});renderEvents(true);}}
+function promptEra(){let l=prompt("Era label?");let s=prompt("Start?");let e=prompt("End?");if(l&&s&&e){pushHistory();eras.push({label:l,start:s,end:e});renderEvents(true);}}
+function promptTag(){let t=prompt("Tag?");if(t){pushHistory();tags.push(t);renderEvents(true);}}
+function presentation(){let i=0;if(!events.length)return;const show=()=>{document.getElementById("timelineCanvasC").innerHTML=`<div class='event'><h3>${events[i].title}</h3><small>${events[i].date}</small></div>`};show();document.onkeydown=(e)=>{if(e.key==="ArrowRight"){i=(i+1)%events.length;show();}if(e.key==="ArrowLeft"){i=(i-1+events.length)%events.length;show();}};}
+</script>
+</body>
+</html>
