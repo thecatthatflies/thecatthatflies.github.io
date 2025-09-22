@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tier List Creator</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link id="googleFontLink" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Tier List Creator</h1>
+        <p>Create, save, and share your own tier lists!</p>
+
+        <button class="button primary-button" onclick="location.href='create.html'">Create New Tier List</button>
+
+        <section class="saved-tier-lists-section">
+            <h2>Your Saved Tier Lists</h2>
+            <div id="savedTierLists" class="tier-list-grid">
+                <p id="noSavedListsMessage">No tier lists saved yet. Start creating one!</p>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAndDisplaySavedTierLists();
+        });
+    </script>
+</body>
+</html>
