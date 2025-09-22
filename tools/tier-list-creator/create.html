@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Tier List</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link id="googleFontLink" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="index.html" class="back-button">&larr; Back to Home</a>
+            <h1>Create/Edit Tier List</h1>
+        </header>
+
+        <div class="tier-list-editor">
+            <div class="editor-section">
+                <label for="tierListTitle">Tier List Title:</label>
+                <input type="text" id="tierListTitle" placeholder="e.g., Best Video Games" class="input-field">
+            </div>
+
+            <div class="editor-section">
+                <h2>Global Settings</h2>
+                <div class="settings-grid">
+                    <div>
+                        <label for="fontFamily">Font Family:</label>
+                        <select id="fontFamily" class="input-field" onchange="updateSetting('fontFamily', this.value)">
+                            <option value="Roboto">Roboto (Default)</option>
+                            <option value="Open Sans">Open Sans</option>
+                            <option value="Lato">Lato</option>
+                            <option value="Montserrat">Montserrat</option>
+                            <option value="Oswald">Oswald</option>
+                            <option value="Merriweather">Merriweather</option>
+                            <option value="Playfair Display">Playfair Display</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="bodyBgColor">Body Background:</label>
+                        <input type="color" id="bodyBgColor" class="color-picker" onchange="updateSetting('bodyBgColor', this.value)">
+                    </div>
+                    <div>
+                        <label for="bodyTextColor">Body Text Color:</label>
+                        <input type="color" id="bodyTextColor" class="color-picker" onchange="updateSetting('bodyTextColor', this.value)">
+                    </div>
+                    <div>
+                        <label for="itemDefaultBgColor">Item Default Background:</label>
+                        <input type="color" id="itemDefaultBgColor" class="color-picker" onchange="updateSetting('itemDefaultBgColor', this.value)">
+                    </div>
+                    <div>
+                        <label for="itemDefaultTextColor">Item Default Text Color:</label>
+                        <input type="color" id="itemDefaultTextColor" class="color-picker" onchange="updateSetting('itemDefaultTextColor', this.value)">
+                    </div>
+                    <div>
+                        <label for="itemWidth">Item Width (px):</label>
+                        <input type="number" id="itemWidth" class="input-field" min="50" max="300" onchange="updateSetting('itemWidth', this.value)">
+                    </div>
+                    <div>
+                        <label for="itemHeight">Item Height (px):</label>
+                        <input type="number" id="itemHeight" class="input-field" min="30" max="200" onchange="updateSetting('itemHeight', this.value)">
+                    </div>
+                    <div>
+                        <label for="tierMinHeight">Tier Min Height (px):</label>
+                        <input type="number" id="tierMinHeight" class="input-field" min="50" max="500" onchange="updateSetting('tierMinHeight', this.value)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="editor-section">
+                <h2>Items to Rank</h2>
+                <div class="item-input-area">
+                    <input type="text" id="newItemName" placeholder="Enter item name" class="input-field">
+                    <input type="text" id="newItemImageUrl" placeholder="Image URL (optional)" class="input-field">
+                    <label for="newItemImageUpload" class="button upload-button">Upload Image</label>
+                    <input type="file" id="newItemImageUpload" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+                    <button class="button primary-button" onclick="addItem()">Add Item</button>
+                </div>
+                <div id="unrankedItems" class="item-pool drop-zone">
+                    <!-- Unranked items will be loaded here -->
+                    <p class="placeholder-text">Drag items here to unrank them, or add new items above.</p>
+                </div>
+            </div>
+
+            <div class="editor-section">
+                <h2>Tiers</h2>
+                <div class="tier-input-area">
+                    <input type="text" id="newTierName" placeholder="Enter tier name (e.g., S, A, B)" class="input-field">
+                    <input type="color" id="newTierColor" value="#cccccc" class="color-picker">
+                    <button class="button primary-button" onclick="addTier()">Add Tier</button>
+                </div>
+                <div id="tierContainer" class="tier-container">
+                    <!-- Tiers will be loaded here -->
+                    <p class="placeholder-text">Add tiers above to start organizing your items.</p>
+                </div>
+            </div>
+
+            <div class="editor-actions">
+                <button class="button primary-button" onclick="saveCurrentTierList()">Save Tier List</button>
+                <button class="button" onclick="generateShareLink()">Share Tier List</button>
+                <div id="shareLinkContainer" class="share-link-container" style="display: none;">
+                    <input type="text" id="shareLink" readonly class="input-field share-link-input">
+                    <button class="button" onclick="copyShareLink()">Copy Link</button>
+                    <span id="copyMessage" class="copy-message"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeTierListEditor();
+            // Attach event listeners for settings inputs
+            document.getElementById('fontFamily').addEventListener('change', (e) => updateSetting('fontFamily', e.target.value));
+            document.getElementById('bodyBgColor').addEventListener('input', (e) => updateSetting('bodyBgColor', e.target.value));
+            document.getElementById('bodyTextColor').addEventListener('input', (e) => updateSetting('bodyTextColor', e.target.value));
+            document.getElementById('itemDefaultBgColor').addEventListener('input', (e) => updateSetting('itemDefaultBgColor', e.target.value));
+            document.getElementById('itemDefaultTextColor').addEventListener('input', (e) => updateSetting('itemDefaultTextColor', e.target.value));
+            document.getElementById('itemWidth').addEventListener('input', (e) => updateSetting('itemWidth', parseInt(e.target.value) || 0));
+            document.getElementById('itemHeight').addEventListener('input', (e) => updateSetting('itemHeight', parseInt(e.target.value) || 0));
+            document.getElementById('tierMinHeight').addEventListener('input', (e) => updateSetting('tierMinHeight', parseInt(e.target.value) || 0));
+        });
+    </script>
+</body>
+</html>
